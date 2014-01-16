@@ -9,7 +9,7 @@
 	"email":"adriswbm@gmail.com",
 	"role":"Programador Symfony"	
 	}
-       ]
+       ],
     "autoload": {
         "psr-0": { "": "src/" }
     },

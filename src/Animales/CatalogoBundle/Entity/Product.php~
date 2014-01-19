@@ -219,33 +219,4 @@ class Product
     {
         return $this->img;
     }
-
-    /**
-     * Set category
-     *
-     * @param \Animales\CatalogoBundle\Entity\SubCategory $category
-     * @return Product
-     */
-    public function setCategory(\Animales\CatalogoBundle\Entity\SubCategory $category = null)
-    {
-        $this->category = $category;
-    
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return \Animales\CatalogoBundle\Entity\SubCategory 
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-
-    public function __toString()
-{
-    return $this->name;
-}
 }

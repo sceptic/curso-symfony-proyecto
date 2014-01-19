@@ -97,49 +97,4 @@ class Category
     {
         return $this->slug;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->subcategories = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add subcategories
-     *
-     * @param \Animales\CatalogoBundle\Entity\SubCategory $subcategories
-     * @return Category
-     */
-    public function addSubcategory(\Animales\CatalogoBundle\Entity\SubCategory $subcategories)
-    {
-        $this->subcategories[] = $subcategories;
-    
-        return $this;
-    }
-
-    /**
-     * Remove subcategories
-     *
-     * @param \Animales\CatalogoBundle\Entity\SubCategory $subcategories
-     */
-    public function removeSubcategory(\Animales\CatalogoBundle\Entity\SubCategory $subcategories)
-    {
-        $this->subcategories->removeElement($subcategories);
-    }
-
-    /**
-     * Get subcategories
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSubcategories()
-    {
-        return $this->subcategories;
-    }
-
-    public function __toString() 
-    {
-        return $this->name;
-    }
 }

@@ -2,7 +2,7 @@ parameters:
     database_driver: pdo_mysql
     database_host: 127.0.0.1
     database_port: null
-    database_name: symfony
+    database_name: sym_catalogo
     database_user: root
     database_password: null
     mailer_transport: smtp
@@ -10,5 +10,5 @@ parameters:
     mailer_user: null
     mailer_password: null
     locale: en
-    secret: 2deae10869c0a8c33fe96f658777636f8
+    secret: eeb83723a3f959d0a54236143c76d2a8
     database_path: null

@@ -28,7 +28,8 @@ class DemoController extends Controller
      */
     public function helloAction($name)
     {
-        return array('name' => $name);
+        return $this->get('router')->generate('_demo_hello', array('name' => 'my-blog-post'), true);
+       //return array('name' => $name);
     }
 
     /**

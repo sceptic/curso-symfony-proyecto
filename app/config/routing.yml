@@ -1,0 +1,5 @@
+animales_catalogo:
+    resource: "@AnimalesCatalogoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

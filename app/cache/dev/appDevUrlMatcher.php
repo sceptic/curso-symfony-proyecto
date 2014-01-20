@@ -308,9 +308,9 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // admin_settings_default_index
-        if (0 === strpos($pathinfo, '/admin/hello') && preg_match('#^/admin/hello/(?P<name>[^/]++)$#s', $pathinfo, $matches)) {
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_settings_default_index')), array (  '_controller' => 'Admin\\SettingsBundle\\Controller\\DefaultController::indexAction',));
+        // user_zone_default_index
+        if (0 === strpos($pathinfo, '/user') && preg_match('#^/user/(?P<name>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'user_zone_default_index')), array (  '_controller' => 'User\\ZoneBundle\\Controller\\DefaultController::indexAction',));
         }
 
         // _welcome

@@ -20,3 +20,9 @@ f8bec2,127.0.0.1,GET,http://sym.proyecto.dev/app_dev.php/admin/hello/adrian,1390
 ca9849,127.0.0.1,GET,http://sym.proyecto.dev/app_dev.php/ap,1390250654,e9eea3
 e9eea3,127.0.0.1,GET,http://sym.proyecto.dev/app_dev.php/ap,1390250655,
 1670cb,127.0.0.1,GET,http://sym.proyecto.dev/app_dev.php/admin/hello/adrian,1390251332,
+d37e9d,127.0.0.1,GET,http://sym.proyecto.dev/app_dev.php/admin/hello/adrian,1390257341,
+d75bd7,127.0.0.1,GET,http://sym.proyecto.dev/app_dev.php/user,1390258077,0ca056
+0ca056,127.0.0.1,GET,http://sym.proyecto.dev/app_dev.php/user,1390258078,
+f678f5,127.0.0.1,GET,http://sym.proyecto.dev/app_dev.php/user/hello/adrian,1390258091,34bbce
+34bbce,127.0.0.1,GET,http://sym.proyecto.dev/app_dev.php/user/hello/adrian,1390258091,
+8813c3,127.0.0.1,GET,http://sym.proyecto.dev/app_dev.php/user/adrian,1390258778,

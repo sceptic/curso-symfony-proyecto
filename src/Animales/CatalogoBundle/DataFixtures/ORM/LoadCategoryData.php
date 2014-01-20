@@ -14,6 +14,7 @@ class LoadCategoryData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $this->loadCategory($manager);
+
         $manager->flush();
     }
 

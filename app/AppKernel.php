@@ -19,6 +19,8 @@ class AppKernel extends Kernel
             new Animales\CatalogoBundle\AnimalesCatalogoBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Admin\SettingsBundle\AdminSettingsBundle(),
+            new User\ZoneBundle\UserZoneBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

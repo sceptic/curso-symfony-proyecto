@@ -5,11 +5,14 @@ namespace User\ZoneBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
+/**
+ * @Route("/user")
+ * @Template()
+ */
 class DefaultController extends Controller
 {
     /**
-     * @Route("/hello/{name}")
+     * @Route("/{name}")
      * @Template()
      */
     public function indexAction($name)

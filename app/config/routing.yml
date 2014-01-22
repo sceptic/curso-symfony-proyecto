@@ -2,12 +2,14 @@ animales_catalogo:
     resource: "@AnimalesCatalogoBundle/Controller/"
     type:     annotation
     prefix:   /
-admin_settings:
-    resource: "@AdminSettingsBundle/Controller/"
+
+user_zone:
+    resource: "@UserZoneBundle/Controller/"
     type:     annotation
     prefix:   /
+
 admin_settings:
-    resource: "@UserZoneBundle/Controller/"
+    resource: "@AdminSettingsBundle/Controller/"
     type:     annotation
     prefix:   /
 

@@ -1,50 +1,52 @@
 <?php
 
-namespace Animales\CatalogoBundle\Controller;
+namespace Admin\SettingsBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Animales\CatalogoBundle\Entity\SubCategory;
-use Animales\CatalogoBundle\Form\SubCategoryType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Animales\CatalogoBundle\Entity\Category;
+use Admin\SettingsBundle\Form\CategoryType;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Cache\ApcCache;
 
 /**
- * SubCategory controller.
- *
- * @Route("/subcategory")
+ * @Route("/admin/category")    
  */
-class SubCategoryController extends Controller
+class CategoryController extends Controller
 {
-
     /**
-     * Lists all SubCategory entities.
+     * Lists all Category entities.
      *
-     * @Route("/", name="subcategory")
+     * @Route("/", name="admin_category")
      * @Method("GET")
      * @Template()
      */
     public function indexAction()
     {
+        
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('AnimalesCatalogoBundle:SubCategory')->findAll();
-
+        $entities = $em->getRepository('AnimalesCatalogoBundle:Category')->getCacheCategories();
+        $cacheDriver = new ApcCache();
+        if ($cacheDriver->contains('Category')) {
+            apc_clear_cache();
+        }
         return array(
             'entities' => $entities,
         );
     }
+
     /**
-     * Creates a new SubCategory entity.
+     * Creates a new Category entity.
      *
-     * @Route("/", name="subcategory_create")
+     * @Route("/", name="category_create")
      * @Method("POST")
-     * @Template("AnimalesCatalogoBundle:SubCategory:new.html.twig")
+     * @Template("AdminSettingsBundle:Category:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new SubCategory();
+        $entity = new Category();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +55,7 @@ class SubCategoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('subcategory_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('category_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -63,16 +65,16 @@ class SubCategoryController extends Controller
     }
 
     /**
-    * Creates a form to create a SubCategory entity.
+    * Creates a form to create a Category entity.
     *
-    * @param SubCategory $entity The entity
+    * @param Category $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(SubCategory $entity)
+    private function createCreateForm(Category $entity)
     {
-        $form = $this->createForm(new SubCategoryType(), $entity, array(
-            'action' => $this->generateUrl('subcategory_create'),
+        $form = $this->createForm(new CategoryType(), $entity, array(
+            'action' => $this->generateUrl('category_create'),
             'method' => 'POST',
         ));
 
@@ -82,15 +84,15 @@ class SubCategoryController extends Controller
     }
 
     /**
-     * Displays a form to create a new SubCategory entity.
+     * Displays a form to create a new Category entity.
      *
-     * @Route("/new", name="subcategory_new")
+     * @Route("/new", name="category_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new SubCategory();
+        $entity = new Category();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,9 +102,9 @@ class SubCategoryController extends Controller
     }
 
     /**
-     * Finds and displays a SubCategory entity.
+     * Finds and displays a Category entity.
      *
-     * @Route("/{id}", name="subcategory_show")
+     * @Route("/{id}", name="category_show")
      * @Method("GET")
      * @Template()
      */
@@ -110,10 +112,10 @@ class SubCategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AnimalesCatalogoBundle:SubCategory')->find($id);
+        $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SubCategory entity.');
+            throw $this->createNotFoundException('Unable to find Category entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,19 +127,20 @@ class SubCategoryController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing SubCategory entity.
+     * Displays a form to edit an existing Category entity.
      *
-     * @Route("/{id}/edit", name="subcategory_edit")
+     * @Route("/{id}/edit", name="category_edit")
      * @Method("GET")
      * @Template()
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('AnimalesCatalogoBundle:SubCategory')->find($id);
+
+        $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SubCategory entity.');
+            throw $this->createNotFoundException('Unable to find Category entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -151,16 +154,16 @@ class SubCategoryController extends Controller
     }
 
     /**
-    * Creates a form to edit a SubCategory entity.
+    * Creates a form to edit a Category entity.
     *
-    * @param SubCategory $entity The entity
+    * @param Category $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(SubCategory $entity)
+    private function createEditForm(Category $entity)
     {
-        $form = $this->createForm(new SubCategoryType(), $entity, array(
-            'action' => $this->generateUrl('subcategory_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new CategoryType(), $entity, array(
+            'action' => $this->generateUrl('category_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -169,20 +172,20 @@ class SubCategoryController extends Controller
         return $form;
     }
     /**
-     * Edits an existing SubCategory entity.
+     * Edits an existing Category entity.
      *
-     * @Route("/{id}", name="subcategory_update")
+     * @Route("/{id}", name="category_update")
      * @Method("PUT")
-     * @Template("AnimalesCatalogoBundle:SubCategory:edit.html.twig")
+     * @Template("AdminSettingsBundle:Category:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AnimalesCatalogoBundle:SubCategory')->find($id);
+        $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find SubCategory entity.');
+            throw $this->createNotFoundException('Unable to find Category entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -192,7 +195,7 @@ class SubCategoryController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('subcategory_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('category_edit', array('id' => $id)));
         }
 
         return array(
@@ -202,9 +205,9 @@ class SubCategoryController extends Controller
         );
     }
     /**
-     * Deletes a SubCategory entity.
+     * Deletes a Category entity.
      *
-     * @Route("/{id}", name="subcategory_delete")
+     * @Route("/{id}", name="category_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -214,21 +217,21 @@ class SubCategoryController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AnimalesCatalogoBundle:SubCategory')->find($id);
+            $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find SubCategory entity.');
+                throw $this->createNotFoundException('Unable to find Category entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('subcategory'));
+        return $this->redirect($this->generateUrl('category'));
     }
 
     /**
-     * Creates a form to delete a SubCategory entity by id.
+     * Creates a form to delete a Category entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -237,12 +240,11 @@ class SubCategoryController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('subcategory_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('category_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }
 
-    
 }

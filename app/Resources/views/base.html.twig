@@ -11,31 +11,62 @@
          <link href="{{ asset('bundles/assets/css/bootstrap-theme.css') }}" rel="stylesheet" type="text/css" media="all" />
          <link href="{{ asset('bundles/assets/css/style.css') }}" rel="stylesheet" type="text/css" media="all" />
          <link href="{{ asset('bundles/assets/css/importants.css') }}" rel="stylesheet" type="text/css" media="all" />
+
         {% block head %}{% endblock %}
     </head>
     <body>
-        <div id="content">
-            <div class="header clear-fix">
-                <div class="header-logo">
-                    <h4>Logo PROYECTO</h4>
-                </div>
+    <div class="container">
 
-                <div class="search">
-                    <h4>Adrián M.F.</h4>
-                </div>
-            </div>
-            <div class="sf-reset">
+      <div class="masthead">
+        <h3 class="text-muted">{{global.project_name}}</h3>
+        <nav>
+        <ul class="nav nav-pills">
+           <li {% if page == 'home' %} class='active'{% endif %}><a href='{{path( 'home')}}'>Home</a></li> 
+        {% for item in functions.navData() %}
+            <li {% if page == item.slug %} class='active'{% endif %}><a href='{{path( 'animales', {'slug':item.slug})}}'>{{item.name}}</a></li> 
+        {% endfor %}
+        </ul>
+        </nav>
+      </div>
+
+      <!-- Jumbotron -->
+      <div class="jumbotron">
+        <h1>Marketing stuff!</h1>
+        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
+        <p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="content">
+        {% block content %} {% endblock %}
+        
+      </div>
+
+      <!-- Site footer -->
+      <div class="footer">
+        <p>
+        Email:{{global.email_contact}}<br>
+        Teléfono:{{global.phone_contact}}<br>
+        </p>
+      </div>
+
+    </div>
+      
+   
+
+       
             
-
-                {% block body %}
-                     <div class="block">
-                        {% block content %}{% endblock %}
-                     </div>
-                {% endblock %}
-            </div>
-        </div>
+            
+                
+            
+            
+{# DEBUG VARIABLES#}       
+{% if debug_var  is defined %}
+<pre>{% debug debug_var %}</pre>
+{% endif %}      
         <script src="{{ asset('bundles/assets/js/jquery.js') }}"></script>
         <script src="{{ asset('bundles/assets/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('bundles/assets/js/holder.js') }}"></script>
         {% block scripts %}{% endblock %}
     </body>
 </html>

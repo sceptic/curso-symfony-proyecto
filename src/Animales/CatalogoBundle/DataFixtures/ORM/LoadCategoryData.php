@@ -4,7 +4,7 @@ namespace Animales\CatalogoBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Animales\CatalogoBundle\Entity\Category;
-use Animales\CatalogoBundle\Entity\User;
+use User\ZoneBundle\Entity\User;
 
 class LoadCategoryData implements FixtureInterface
 {
@@ -14,6 +14,7 @@ class LoadCategoryData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $this->loadCategory($manager);
+        $this->loadUser($manager);
 
         $manager->flush();
     }
@@ -21,7 +22,7 @@ class LoadCategoryData implements FixtureInterface
     /**
      * Category fixtures
      */
-    private function loadData(ObjectManager $manager){
+    private function loadCategory(ObjectManager $manager){
 
         $acuario = new Category();
         $acuario->setId(1);
@@ -63,6 +64,10 @@ class LoadCategoryData implements FixtureInterface
         $userAdmin = new User();
         $userAdmin->setUsername('admin');
         $userAdmin->setPassword('adrian');
+        $userAdmin->setEmail('adrian@mail.com');
+        $userAdmin->setToken('adrian');
+        $userAdmin->setActive(1);
+
         $manager->persist($userAdmin);
     }
 

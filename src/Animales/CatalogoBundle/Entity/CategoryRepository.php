@@ -3,6 +3,7 @@
 namespace Animales\CatalogoBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Cache\ApcCache;
 
 /**
  * CategoryRepository
@@ -12,4 +13,54 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
+
+// 1:findAllCategories()
+	/**
+	 * Encuentra todas las categorias y subcategorias
+	 */
+	public function findAllCategories(){
+
+		$em = $this->getEntityManager();
+        $query = $em->createQuery(
+                                    'SELECT 
+                                      c,s
+                                  	 FROM 
+                                      AnimalesCatalogoBundle:Category c
+                                     LEFT JOIN c.subcategories s 
+                                     ORDER BY c.name ASC, s.name ASC'
+                                    
+        );
+
+         $result= $query->useResultCache(true)->getArrayResult();
+         $cacheDriver = new ApcCache();
+		 $cacheDriver->save('AllCategories', $result); 
+        
+		return $result;
+	} 
+
+
+// 2: findAllCategory
+	/**
+	 * Encontrar todas las subcategorias de una categoria
+	 */
+	public function findAllCategory($slug){
+		// slug categoria
+		$em = $this->getEntityManager($slug);
+		$dql= 'SELECT 
+               c,s
+               FROM 
+               AnimalesCatalogoBundle:Category c
+               LEFT JOIN c.subcategories s ';
+        $dql.= "WHERE c.slug = :slug ORDER BY s.name ASC";
+
+
+        $query = $em->createQuery($dql)
+        			->setParameter('slug', $slug);
+
+         $result= $query->useResultCache(true)->getArrayResult(); 
+        
+		return $result;
+	} 
+
+
 }

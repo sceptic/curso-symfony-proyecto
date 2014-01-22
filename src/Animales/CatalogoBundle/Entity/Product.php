@@ -17,7 +17,7 @@ class Product
      * @ORM\ManyToOne(targetEntity="SubCategory", inversedBy="products")
      * @ORM\JoinColumn(name="subcategory_id", referencedColumnName="id")
      */
-    protected $category;
+    protected $subcategory;
 
 
     /**

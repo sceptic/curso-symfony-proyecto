@@ -28,6 +28,12 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals: 
+        global:
+            project_name: "Animal Chollo"
+            email_contact: "adriswbm@gmail.com"
+            phone_contact: "686 906 106"
+        functions: @util.twig
 
 # Assetic Configuration
 assetic:
@@ -59,6 +65,9 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        metadata_cache_driver: apc
+        query_cache_driver: apc
+        result_cache_driver: apc
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -67,3 +76,12 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+services:
+    util.twig:
+        class: Animales\CatalogoBundle\Util\Twig
+        arguments: [@service_container]
+    twig.extension.debug:
+        class: Twig_Extensions_Extension_Debug
+        tags:
+            - { name:twig.extension }

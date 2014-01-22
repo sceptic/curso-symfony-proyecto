@@ -3,7 +3,7 @@
 namespace Animales\CatalogoBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-
+use Doctrine\Common\Cache\ApcCache;
 /**
  * SubCategoryRepository
  *
@@ -12,4 +12,27 @@ use Doctrine\ORM\EntityRepository;
  */
 class SubCategoryRepository extends EntityRepository
 {
+
+//1:findSubCategoryProducts
+	/**
+	 * Encuentra todos los productos de una subcategoria
+	 */
+	public function findSubCategoryProducts($slug){
+		$em = $this->getEntityManager();
+		$dql =  'SELECT s,p
+                 FROM AnimalesCatalogoBundle:SubCategory s
+                 JOIN s.products p
+                 WHERE s.slug = :slug 
+                 ';
+       // $dql.= "";
+
+        $query = $em->createQuery($dql)
+        			->setParameter('slug',$slug);
+
+        $result= $query->useResultCache(true)->getArrayResult();
+        $cacheDriver = new ApcCache();
+		$cacheDriver->save('AllProducts'.$slug, $result); 
+         
+		return $result;
+	}
 }

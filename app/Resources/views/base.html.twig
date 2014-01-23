@@ -5,43 +5,56 @@
         <meta http-equiv="Content-Type" content="text/html; charset={{ _charset }}"/>
         <meta name="robots" content="noindex,nofollow" />
         <title>{% block title %}{% endblock %}</title>
-        <link href="{{ asset('bundles/framework/css/structure.css') }}" rel="stylesheet" type="text/css" media="all" />
-        <link href="{{ asset('bundles/framework/css/body.css') }}" rel="stylesheet" type="text/css" media="all" />
+        
          <link href="{{ asset('bundles/assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
          <link href="{{ asset('bundles/assets/css/bootstrap-theme.css') }}" rel="stylesheet" type="text/css" media="all" />
          <link href="{{ asset('bundles/assets/css/style.css') }}" rel="stylesheet" type="text/css" media="all" />
-         <link href="{{ asset('bundles/assets/css/importants.css') }}" rel="stylesheet" type="text/css" media="all" />
+         
 
         {% block head %}{% endblock %}
     </head>
     <body>
     <div class="container">
 
-      <div class="masthead">
-        <h3 class="text-muted">{{global.project_name}}</h3>
-        <nav>
-        <ul class="nav nav-pills">
-           <li {% if page == 'home' %} class='active'{% endif %}><a href='{{path( 'home')}}'>Home</a></li> 
-        {% for item in functions.navData() %}
-            <li {% if page == item.slug %} class='active'{% endif %}><a href='{{path( 'animales', {'slug':item.slug})}}'>{{item.name}}</a></li> 
-        {% endfor %}
-        </ul>
-        </nav>
-      </div>
+      <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Menu</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Animal Chollo</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
 
-      <!-- Jumbotron -->
+              <li {% if page == 'home' %} class='active'{% endif %}><a href='{{path( 'home')}}'>Home</a></li> 
+              {% for item in functions.navData() %}
+                <li {% if page == item.slug %} class='active'{% endif %}><a href='{{path( 'animales', {'slug':item.slug})}}'>{{item.name}}</a></li> 
+              {% endfor %}
+            </ul>
+
+            </div></div></div>
+
+      <!-- Jumbotron 
       <div class="jumbotron">
         <h1>Marketing stuff!</h1>
         <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
         <p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
-      </div>
-
+      </div>-->
+      {% if warning is defined %}
+      {{macros.warning(warning)}}
+      {% endif %}
       <!-- Example row of columns -->
-      <div class="content">
+     
+      <div class="content row">
+      
         {% block content %} {% endblock %}
         
       </div>
-
+      <hr class="featurette-divider"></hr>
       <!-- Site footer -->
       <div class="footer">
         <p>
@@ -70,3 +83,7 @@
         {% block scripts %}{% endblock %}
     </body>
 </html>
+
+
+            
+          

@@ -1,4 +1,33 @@
 {% extends '::base.html.twig' %}
 {% block content -%}
 
+{%for cat in category%}
+	 <div class="col-sm-6 col-md-4 text-center">
+     <div class="panel-heading">
+       <h4 class="panel-title">
+         <a class="collapsed thumbnail" data-toggle="collapse" data-parent="#accordion" href="#collapse{{loop.index}}">
+           <img class="" style='' src="{{asset('bundles/assets/img/iconos/'~cat.slug~'.png')}}"></img> {{cat.name|upper}}
+         </a>
+       </h4>
+     </div>
+     <div style="height: 0px;" id="collapse{{loop.index}}" class="panel-collapse collapse">
+       <div class="panel-body">
+       <div class="list-group">
+        {%for sub in cat.subcategories%}
+  			<a href="{{path( 'productos', {'slug':sub.slug})}}" class="list-group-item active">{{sub.name|upper}}</a>
+  		{% else %}
+  			<a href="#" class="list-group-item">{{"Catálogo no disponible"|upper}}</a>
+		{%endfor%}
+	   </div>
+       </div>
+     </div>
+     </div>
+     {% if loop.index % 3 == 0 %}<div style='clear:both;'> </div>{% endif %}	
+{%endfor%}
+
 {% endblock %}
+
+
+
+
+

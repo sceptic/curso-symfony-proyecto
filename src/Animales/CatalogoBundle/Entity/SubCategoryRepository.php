@@ -19,10 +19,12 @@ class SubCategoryRepository extends EntityRepository
 	 */
 	public function findSubCategoryProducts($slug){
 		$em = $this->getEntityManager();
-		$dql =  'SELECT s,p
+		$dql =  'SELECT s,p,
+						c.name, c.slug
                  FROM AnimalesCatalogoBundle:SubCategory s
                  JOIN s.products p
-                 WHERE s.slug = :slug 
+                 JOIN s.category c
+                 WHERE s.slug = :slug
                  ';
        // $dql.= "";
 
@@ -35,4 +37,61 @@ class SubCategoryRepository extends EntityRepository
          
 		return $result;
 	}
+// 2: findAllCategory
+	/**
+	 * Encontrar todas las subcategorias de una categoria 
+	 */
+	public function findAllCategory($slug){
+		// slug categoria
+		$em = $this->getEntityManager($slug);
+		$dql= 'SELECT  s,p,
+						c.name, c.slug,
+						COUNT(p.id) as number_products
+                 FROM AnimalesCatalogoBundle:SubCategory s
+                 LEFT JOIN s.products p
+                 LEFT JOIN s.category c
+                 WHERE c.slug = :slug GROUP BY s.id ORDER BY s.name ASC';
+
+        $query = $em->createQuery($dql)
+        			->setParameter('slug', $slug);
+
+         $result= $query->useResultCache(true)->getArrayResult(); 
+
+         if($result)
+         {
+        	$cacheDriver = new ApcCache();
+			$cacheDriver->save('SubcategoriesProducts'.$slug, $result);
+         	return $result;
+         }else{
+
+         	return $this->findAllCategory2($slug);
+         }
+
+	}
+
+// 3: findAllCategory
+	/**
+	 * Encontrar todas las subcategorias de una categoria
+	 */
+	public  function findAllCategory2($slug){
+		// slug categoria
+		$em = $this->getEntityManager($slug);
+		$dql= 'SELECT 
+               c,s
+               FROM 
+               AnimalesCatalogoBundle:Category c
+               LEFT JOIN c.subcategories s ';
+        $dql.= "WHERE c.slug = :slug ORDER BY s.name ASC";
+
+
+        $query = $em->createQuery($dql)
+        			->setParameter('slug', $slug);
+
+        $result= $query->useResultCache(true)->getArrayResult(); 
+        $result= $query->useResultCache(true)->getArrayResult();
+        $cacheDriver = new ApcCache();
+		$cacheDriver->save('Subcategories'.$slug, $result);
+        
+		return $result;
+	} 
 }

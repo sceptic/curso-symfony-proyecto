@@ -19,7 +19,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-    	apc_clear_cache();
     	$category = $this->getRepo('Category')
         ->findAllCategories();
 
@@ -32,21 +31,28 @@ class DefaultController extends Controller
 
     /**
      * @Route("/animales/{slug}", name="animales")
+     * @Route("/animales/{slug}/{error}", name="animales_error")
      * @Template()
      * categoria
      */
-    public function categoriaAction($slug)
+    public function categoriaAction($slug, $error=null )
     {
     	//slug categorias
-    	$category = $this->getRepo('Category')
+    	$category = $this->getRepo('SubCategory')
         ->findAllCategory($slug);
 
+        $params = array('page' => $slug, 'category'=> $category, 'debug_var'=>$category);
+
+        if($error)
+    	{
+    		$params['warning'] = "Catálogo no encontrado";
+    	}
+   
 	    if (!$category) {
-	        throw $this->createNotFoundException(
-	            'NO HAY '
-	        );
+	      //return $this->redirect($this->generateUrl('home'));
 	    }	
-        return array('page' => $slug, 'category'=> $category, 'debug_var'=>$category);
+
+        return $params;
     }
 
 
@@ -57,12 +63,14 @@ class DefaultController extends Controller
      */
     public function catalogoAction($slug)
     {
-    	apc_clear_cache();
     	//slug subcategorias
     	$products = $this->getRepo('SubCategory')
     					 ->findSubCategoryProducts($slug);
-	    
-        return array('page' => 'productos', 'productos'=> $products, 'debug_var'=>$products );
+    	if($products)
+        	return array('page' => 'productos', 'products'=> $products, 'debug_var'=>$products );
+    	else
+    		return $this->redirect($this->generateUrl('home'));
+
     }
 
 
@@ -72,8 +80,16 @@ class DefaultController extends Controller
      * Get repository method
      */
     private function getRepo($entity){
+    	$this->clearCacheApc();
     	return $this->getDoctrine()
         ->getRepository('AnimalesCatalogoBundle:'.$entity);
+    }
+
+    /**
+	 * Clear apc cache 
+     */
+    private function clearCacheApc(){
+    	apc_clear_cache();
     }
 
 

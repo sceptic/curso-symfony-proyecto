@@ -39,28 +39,4 @@ class CategoryRepository extends EntityRepository
 	} 
 
 
-// 2: findAllCategory
-	/**
-	 * Encontrar todas las subcategorias de una categoria
-	 */
-	public function findAllCategory($slug){
-		// slug categoria
-		$em = $this->getEntityManager($slug);
-		$dql= 'SELECT 
-               c,s
-               FROM 
-               AnimalesCatalogoBundle:Category c
-               LEFT JOIN c.subcategories s ';
-        $dql.= "WHERE c.slug = :slug ORDER BY s.name ASC";
-
-
-        $query = $em->createQuery($dql)
-        			->setParameter('slug', $slug);
-
-         $result= $query->useResultCache(true)->getArrayResult(); 
-        
-		return $result;
-	} 
-
-
 }

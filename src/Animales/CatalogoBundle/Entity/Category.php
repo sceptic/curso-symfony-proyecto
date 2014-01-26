@@ -1,7 +1,7 @@
 <?php
-
 namespace Animales\CatalogoBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +31,12 @@ class Category
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(
+     *      min = "3",
+     *      max = "50",
+     *      minMessage = "Debe tener {{ limit }} caracteres de largo como mínimo",
+     *      maxMessage = "No puede tener más de {{ limit }} caracteres de largo")
      */
     private $name;
 
@@ -38,6 +44,12 @@ class Category
      * @var string
      *
      * @ORM\Column(name="slug", type="string", length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(
+     *      min = "3",
+     *      max = "50",
+     *      minMessage = "Debe tener {{ limit }} caracteres de largo como mínimo",
+     *      maxMessage = "No puede tener más de {{ limit }} caracteres de largo")
      */
     private $slug;
 

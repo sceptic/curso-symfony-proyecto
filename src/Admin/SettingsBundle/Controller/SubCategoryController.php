@@ -1,6 +1,6 @@
 <?php
 
-namespace Animales\CatalogoBundle\Controller;
+namespace Admin\SettingsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Animales\CatalogoBundle\Entity\SubCategory;
 use Animales\CatalogoBundle\Form\SubCategoryType;
+use Animales\CatalogoBundle\Entity\Images;
+use Animales\CatalogoBundle\Form\ImagesType;
 
 /**
  * SubCategory controller.
@@ -28,9 +30,10 @@ class SubCategoryController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+       
 
         $entities = $em->getRepository('AnimalesCatalogoBundle:SubCategory')->findAll();
-
+        $entitie = $em->getRepository('AnimalesCatalogoBundle:SubCategory')->findOneById(5);
         return array(
             'entities' => $entities,
         );
@@ -45,6 +48,7 @@ class SubCategoryController extends Controller
     public function createAction(Request $request)
     {
         $entity = new SubCategory();
+        
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -134,6 +138,7 @@ class SubCategoryController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+
         $entity = $em->getRepository('AnimalesCatalogoBundle:SubCategory')->find($id);
 
         if (!$entity) {
@@ -243,6 +248,4 @@ class SubCategoryController extends Controller
             ->getForm()
         ;
     }
-
-    
 }

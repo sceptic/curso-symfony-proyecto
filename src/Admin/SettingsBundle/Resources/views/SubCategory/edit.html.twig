@@ -1,0 +1,12 @@
+{% extends 'AdminSettingsBundle::layout.html.twig' %}
+
+{% block adminHeading -%}Editar subcategoria{% endblock %}
+{% block admin %}
+{{ form(edit_form) }}
+{{ form(delete_form) }}
+<hr/>
+<a class="btn btn-default" href="{{ path('subcategory') }}">
+            Volver a la lista
+        </a>
+
+{% endblock %}

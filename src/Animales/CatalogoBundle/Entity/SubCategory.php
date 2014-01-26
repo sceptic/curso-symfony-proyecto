@@ -3,6 +3,7 @@
 namespace Animales\CatalogoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * SubCategory
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class SubCategory
 {
+//  Relation properties:
 
     /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="subcategory")
@@ -19,11 +21,19 @@ class SubCategory
     protected $products; 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="subcategories")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="subcategories", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $category;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Images", inversedBy="subcategories", cascade={"persist"})
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     */
+    protected $image;
+
+// endrelation ==========================================
 
     /**
      * @var integer
@@ -38,6 +48,12 @@ class SubCategory
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(
+     *      min = "3",
+     *      max = "50",
+     *      minMessage = "Debe tener {{ limit }} caracteres de largo como mínimo",
+     *      maxMessage = "No puede tener más de {{ limit }} caracteres de largo")
      */
     private $name;
 
@@ -52,6 +68,12 @@ class SubCategory
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=300)
+     * @Assert\NotNull()
+     * @Assert\Length(
+     *      min = "5",
+     *      max = "300",
+     *      minMessage = "Debe tener {{ limit }} caracteres de largo como mínimo",
+     *      maxMessage = "No puede tener más de {{ limit }} caracteres de largo")
      */
     private $description;
 
@@ -62,6 +84,15 @@ class SubCategory
      */
     private $slug;
 
+// Methods ========================
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -104,7 +135,7 @@ class SubCategory
      */
     public function setCategoryId($categoryId)
     {
-        $this->categoryId = $categoryId;
+        $this->categoryId = 1;
     
         return $this;
     }
@@ -164,13 +195,7 @@ class SubCategory
     {
         return $this->slug;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    
 
     /**
      * Add products
@@ -227,6 +252,30 @@ class SubCategory
     {
         return $this->category;
     }
+
+
+    /**
+     * Set image
+     *
+     * @param \Animales\CatalogoBundle\Entity\Images $image
+     * @return SubCategory
+     */
+    public function setImage(\Animales\CatalogoBundle\Entity\Images $image = null)
+    {
+        $this->image = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Animales\CatalogoBundle\Entity\Images 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }    
 
 
     public function __toString()

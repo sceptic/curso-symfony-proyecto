@@ -1,15 +1,15 @@
-{% extends '::base.html.twig' %}
+{% extends 'AdminSettingsBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>Categoria</h1>
+{% block adminHeading -%}Listado de categorias{% endblock %}
+{% block admin %}
 
-    <table class="records_list">
+<table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Nombre</th>
                 <th>Slug</th>
-                <th>Actions</th>
+                <th> </th>
             </tr>
         </thead>
         <tbody>
@@ -19,25 +19,16 @@
                 <td>{{ entity.name }}</td>
                 <td>{{ entity.slug }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('category_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('category_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                
+                    <a class="btn btn-default" href="{{ path('category_show', { 'id': entity.id }) }}">Ver</a>          
+                    <a class="btn btn-default" href="{{ path('category_edit', { 'id': entity.id }) }}">Editar</a>
+                    
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('category_new') }}">
+<a class="btn btn-default"  href="{{ path('category_new') }}">
                 Create a new entry
             </a>
-        </li>
-    </ul>
-    {% endblock %}
+{% endblock %}

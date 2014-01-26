@@ -13,7 +13,7 @@ use Doctrine\Common\Cache\ApcCache;
 class SubCategoryRepository extends EntityRepository
 {
 
-//1:findSubCategoryProducts
+//1: findSubCategoryProducts
 	/**
 	 * Encuentra todos los productos de una subcategoria
 	 */
@@ -24,9 +24,7 @@ class SubCategoryRepository extends EntityRepository
                  FROM AnimalesCatalogoBundle:SubCategory s
                  JOIN s.products p
                  JOIN s.category c
-                 WHERE s.slug = :slug
-                 ';
-       // $dql.= "";
+                 WHERE s.slug = :slug';
 
         $query = $em->createQuery($dql)
         			->setParameter('slug',$slug);
@@ -37,9 +35,10 @@ class SubCategoryRepository extends EntityRepository
          
 		return $result;
 	}
+
 // 2: findAllCategory
 	/**
-	 * Encontrar todas las subcategorias de una categoria 
+	 * Encontrar todas las subcategorias de una categoria con productos
 	 */
 	public function findAllCategory($slug){
 		// slug categoria
@@ -64,16 +63,16 @@ class SubCategoryRepository extends EntityRepository
          	return $result;
          }else{
 
-         	return $this->findAllCategory2($slug);
+         	return $this->findAllCS($slug);
          }
 
 	}
 
-// 3: findAllCategory
+// 3: findAllCS
 	/**
 	 * Encontrar todas las subcategorias de una categoria
 	 */
-	public  function findAllCategory2($slug){
+	public  function findAllCS($slug){
 		// slug categoria
 		$em = $this->getEntityManager($slug);
 		$dql= 'SELECT 

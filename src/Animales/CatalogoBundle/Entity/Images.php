@@ -1,15 +1,36 @@
 <?php
-namespace Acme\DemoBundle\Entity;
+namespace Animales\CatalogoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\Common\Collections\ArrayCollection;
+use Animales\CatalogoBundle\Entity\SubCategory;
+use Animales\CatalogoBundle\Entity\Product;
+
+
 /**
- * @ORM\Table(name="Document")
+ * Images
+ *
+ * @ORM\Table()
+ * @ORM\Entity
  */
-class Document
+class Images
 {
+// Relations ===========================
+    /**
+     * @ORM\OneToMany(targetEntity="SubCategory", mappedBy="image")
+     */
+    protected $subcategories;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="image")
+     */
+    protected $products;
+
+// endrelations ========================
+
     /**
      * @var integer
      *
@@ -27,13 +48,101 @@ class Document
     private $name;
 
     /**
-     * @Assert\File(maxSize="6000000")
+     * @Assert\Image(
+     *     mimeTypes = {"image/*"},
+     *     mimeTypesMessage = "Tiene que ser una imágen",
+     *     maxSize="6000000",
+     *     minWidth = 200,
+     *     maxWidth = 500,
+     *     minHeight = 200,
+     *     maxHeight = 500,
+     *     mimeTypesMessage = "Este archivo no es una imagen válida.",
+     *     maxWidthMessage = "El ancho de la imagen es demasiado grande.",
+     *     minWidthMessage = "El ancho de la imagen es demasiado pequeño.",
+     *     maxHeightMessage = "La altura de la imagen es demasiado grande.",
+     *     minHeightMessage = "La altura de la imagen es demasiado pequeña.")
      */
     private $file;
 
 // Methods ==============================    
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->subcategories = new ArrayCollection();
+        $this->products = new ArrayCollection();
+    }
+//
+    /**
+     * Add subcategories
+     *
+     * @param \Animales\CatalogoBundle\Entity\SubCategory $subcategories
+     * @return Category
+     */
+    public function addSubCategory(SubCategory $subcategories)
+    {
+        $this->subcategories[] = $subcategories;
+    
+        return $this;
+    }
 
+    /**
+     * Remove subcategories
+     *
+     * @param \Animales\CatalogoBundle\Entity\SubCategory $subcategories
+     */
+    public function removeSubCategory(SubCategory $subcategories)
+    {
+        $this->subcategories->removeElement($subcategories);
+    }
+
+    /**
+     * Get subcategories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSubCategory()
+    {
+        return $this->subcategories;
+    }
+
+//
+    /**
+     * Add products
+     *
+     * @param \Animales\CatalogoBundle\Entity\Product $products
+     * @return Category
+     */
+    public function addProduct(Product $products)
+    {
+        $this->products[] = $products;
+    
+        return $this;
+    }
+
+    /**
+     * Remove products
+     *
+     * @param \Animales\CatalogoBundle\Entity\Product $products
+     */
+    public function removeProduct(Product $products)
+    {
+        $this->products->removeElement($products);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProduct()
+    {
+        return $this->products;
+    }
+
+//
     /**
      * Get id
      *
@@ -176,4 +285,6 @@ class Document
     {
         return $this->name;
     }
+
+    
 }

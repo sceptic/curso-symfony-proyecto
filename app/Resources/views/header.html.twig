@@ -1,0 +1,27 @@
+{% block header %}
+      {% if page  is not defined%}
+        {% set page = ''%}
+      {% endif %}
+      <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Menu</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Animal Chollo</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+
+              <li {% if page == 'home' %} class='active'{% endif %}><a href='{{path( 'home')}}'>Home</a></li> 
+              {% for item in functions.navData() %}
+                <li {% if page == item.slug %} class='active'{% endif %}><a href='{{path( 'animales', {'slug':item.slug})}}'>{{item.name}}</a></li> 
+              {% endfor %}
+            </ul>
+
+            </div></div>
+      </div>
+{% endblock %}

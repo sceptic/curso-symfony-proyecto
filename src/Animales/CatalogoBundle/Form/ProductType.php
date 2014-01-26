@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SubCategoryType extends AbstractType
+class ProductType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,11 +15,12 @@ class SubCategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('slug')
-            ->add('category')
             ->add('image', new ImagesType())
+            ->add('name')
+            ->add('slug')
+            ->add('ean13')
+            ->add('description')
+            ->add('subcategory')
         ;
     }
     
@@ -29,7 +30,7 @@ class SubCategoryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Animales\CatalogoBundle\Entity\SubCategory'
+            'data_class' => 'Animales\CatalogoBundle\Entity\Product'
         ));
     }
 
@@ -38,6 +39,6 @@ class SubCategoryType extends AbstractType
      */
     public function getName()
     {
-        return 'animales_catalogobundle_subcategory';
+        return 'animales_catalogobundle_product';
     }
 }

@@ -4,6 +4,8 @@ namespace Animales\CatalogoBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+use Doctrine\Common\Cache\ApcCache;
+
 /**
  * ProductRepository
  *
@@ -12,4 +14,34 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
+
+//1  getAllProducts
+	/**
+	 * Todos los productos
+	 */
+	public function getAllProducts(){
+		$em = $this->getEntityManager();
+		$dql =  'SELECT p,i,s
+                 FROM AnimalesCatalogoBundle:Product p
+                 JOIN p.subcategory s
+                 JOIN p.image i
+                ';
+        $query = $em->createQuery($dql);
+
+        $result= $query->useResultCache(true)->getArrayResult();
+        $cacheDriver = new ApcCache();
+		$cacheDriver->save('ListProducts', $result); 
+         
+		return $result;
+
+
+	}
+
+
+	// Un producto [id / nombre]
+	public function getProduct($id, $slug){}
+	
+	// Ultimos productos 10
+	public function getLastProducts(){}
+
 }

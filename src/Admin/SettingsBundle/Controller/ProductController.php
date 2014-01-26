@@ -7,21 +7,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Animales\CatalogoBundle\Entity\Category;
-use Animales\CatalogoBundle\Form\CategoryType;
+use Animales\CatalogoBundle\Entity\Product;
+use Animales\CatalogoBundle\Form\ProductType;
 
 /**
- * Category controller.
+ * Product controller.
  *
- * @Route("/category")
+ * @Route("/product")
  */
-class CategoryController extends Controller
+class ProductController extends Controller
 {
 
     /**
-     * Lists all Category entities.
+     * Lists all Product entities.
      *
-     * @Route("/", name="category")
+     * @Route("/", name="product")
      * @Method("GET")
      * @Template()
      */
@@ -29,22 +29,23 @@ class CategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AnimalesCatalogoBundle:Category')->findAll();
+        $entities = $em->getRepository('AnimalesCatalogoBundle:Product')->getAllProducts();
 
         return array(
             'entities' => $entities,
+            'debug_var'=> $entities
         );
     }
     /**
-     * Creates a new Category entity.
+     * Creates a new Product entity.
      *
-     * @Route("/", name="category_create")
+     * @Route("/", name="product_create")
      * @Method("POST")
-     * @Template("AnimalesCatalogoBundle:Category:new.html.twig")
+     * @Template("AnimalesCatalogoBundle:Product:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Category();
+        $entity = new Product();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +54,7 @@ class CategoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('category_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('product_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -63,16 +64,16 @@ class CategoryController extends Controller
     }
 
     /**
-    * Creates a form to create a Category entity.
+    * Creates a form to create a Product entity.
     *
-    * @param Category $entity The entity
+    * @param Product $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Category $entity)
+    private function createCreateForm(Product $entity)
     {
-        $form = $this->createForm(new CategoryType(), $entity, array(
-            'action' => $this->generateUrl('category_create'),
+        $form = $this->createForm(new ProductType(), $entity, array(
+            'action' => $this->generateUrl('product_create'),
             'method' => 'POST',
         ));
 
@@ -82,15 +83,15 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a form to create a new Category entity.
+     * Displays a form to create a new Product entity.
      *
-     * @Route("/new", name="category_new")
+     * @Route("/new", name="product_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Category();
+        $entity = new Product();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,9 +101,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Finds and displays a Category entity.
+     * Finds and displays a Product entity.
      *
-     * @Route("/{id}", name="category_show")
+     * @Route("/{id}", name="product_show")
      * @Method("GET")
      * @Template()
      */
@@ -110,10 +111,10 @@ class CategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
+        $entity = $em->getRepository('AnimalesCatalogoBundle:Product')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
+            throw $this->createNotFoundException('Unable to find Product entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,9 +126,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Category entity.
+     * Displays a form to edit an existing Product entity.
      *
-     * @Route("/{id}/edit", name="category_edit")
+     * @Route("/{id}/edit", name="product_edit")
      * @Method("GET")
      * @Template()
      */
@@ -135,10 +136,10 @@ class CategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
+        $entity = $em->getRepository('AnimalesCatalogoBundle:Product')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
+            throw $this->createNotFoundException('Unable to find Product entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,16 +153,16 @@ class CategoryController extends Controller
     }
 
     /**
-    * Creates a form to edit a Category entity.
+    * Creates a form to edit a Product entity.
     *
-    * @param Category $entity The entity
+    * @param Product $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Category $entity)
+    private function createEditForm(Product $entity)
     {
-        $form = $this->createForm(new CategoryType(), $entity, array(
-            'action' => $this->generateUrl('category_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new ProductType(), $entity, array(
+            'action' => $this->generateUrl('product_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -170,20 +171,20 @@ class CategoryController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Category entity.
+     * Edits an existing Product entity.
      *
-     * @Route("/{id}", name="category_update")
+     * @Route("/{id}", name="product_update")
      * @Method("PUT")
-     * @Template("AnimalesCatalogoBundle:Category:edit.html.twig")
+     * @Template("AnimalesCatalogoBundle:Product:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
+        $entity = $em->getRepository('AnimalesCatalogoBundle:Product')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
+            throw $this->createNotFoundException('Unable to find Product entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -193,7 +194,7 @@ class CategoryController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('category_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('product_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +204,9 @@ class CategoryController extends Controller
         );
     }
     /**
-     * Deletes a Category entity.
+     * Deletes a Product entity.
      *
-     * @Route("/{id}", name="category_delete")
+     * @Route("/{id}", name="product_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,21 +216,21 @@ class CategoryController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
+            $entity = $em->getRepository('AnimalesCatalogoBundle:Product')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Category entity.');
+                throw $this->createNotFoundException('Unable to find Product entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('category'));
+        return $this->redirect($this->generateUrl('product'));
     }
 
     /**
-     * Creates a form to delete a Category entity by id.
+     * Creates a form to delete a Product entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -238,7 +239,7 @@ class CategoryController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('category_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('product_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

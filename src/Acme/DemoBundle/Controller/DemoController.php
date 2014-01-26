@@ -6,10 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Acme\DemoBundle\Form\ContactType;
+use Acme\DemoBundle\Entity\Document;
 
 // these import the "@Route" and "@Template" annotations
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class DemoController extends Controller
 {
@@ -54,4 +56,55 @@ class DemoController extends Controller
 
         return array('form' => $form->createView());
     }
+
+
+    /**
+     * @Route("/upimg", name="upimg")
+     * @Template()
+     */
+    public function uploadAction(Request $request)
+    {
+        $document = new Document();
+        $form = $this->createFormBuilder($document)
+            ->add('name')
+            ->add('file')
+            ->getForm();
+
+        return array('form' => $form->createView());
+    }
+
+
+    /**
+     * @Route("/upimg/ok", name="img_save")
+     * @Method("POST")
+     * @Template()
+     */
+    public function saveImgAction(Request $request)
+    {
+        $document = new Document();
+        $form = $this->createFormBuilder($document)
+            ->add('name')
+            ->add('file')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $document->upload();
+            $file = 22;
+
+            $em->persist($document);
+            $em->flush();
+
+           //return $this->redirect($this->generateUrl(...));
+        }
+
+        return array('file'=>$file,'form' => $form->createView());
+    }
+
+
+
+
 }

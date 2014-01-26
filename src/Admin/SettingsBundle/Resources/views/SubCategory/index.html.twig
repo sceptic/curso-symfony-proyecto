@@ -1,0 +1,40 @@
+{% extends 'AdminSettingsBundle::layout.html.twig' %}
+
+{% block adminHeading -%}Listado subcategorias{% endblock %}
+{% block admin %}
+<table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Categoria</th>
+                <th>Descripción</th>
+                <th>Slug</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('subcategory_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.name }}</td>
+                <td>{{ entity.category.name }}</td>
+                <td>{{ entity.description }}</td>
+                <td>{{ entity.slug }}</td>
+                <td>
+                
+                    <a class="btn btn-default" href="{{ path('subcategory_show', { 'id': entity.id }) }}">Ver</a>
+                    
+                    <a class="btn btn-default" href="{{ path('subcategory_edit', { 'id': entity.id }) }}">Editar</a>
+                    </li>
+                
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<hr/>
+            <a class="btn btn-default"  href="{{ path('subcategory_new') }}">
+                Nueva subcategoria
+            </a>
+{% endblock %}

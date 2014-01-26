@@ -12,13 +12,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Product
 {
-
+// Relation ===============================
     /**
      * @ORM\ManyToOne(targetEntity="SubCategory", inversedBy="products")
      * @ORM\JoinColumn(name="subcategory_id", referencedColumnName="id")
      */
     protected $subcategory;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Images", inversedBy="products", cascade={"persist"})
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     */
+    protected $image;
+
+// endrelations============================
 
     /**
      * @var integer
@@ -28,6 +35,7 @@ class Product
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
 
     /**
      * @var string
@@ -64,13 +72,8 @@ class Product
      */
     private $description;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="img", type="string", length=255)
-     */
-    private $img;
 
+// Methods ======================
 
     /**
      * Get id
@@ -197,28 +200,6 @@ class Product
         return $this->description;
     }
 
-    /**
-     * Set img
-     *
-     * @param string $img
-     * @return Product
-     */
-    public function setImg($img)
-    {
-        $this->img = $img;
-    
-        return $this;
-    }
-
-    /**
-     * Get img
-     *
-     * @return string 
-     */
-    public function getImg()
-    {
-        return $this->img;
-    }
 
     /**
      * Set category
@@ -226,9 +207,9 @@ class Product
      * @param \Animales\CatalogoBundle\Entity\SubCategory $category
      * @return Product
      */
-    public function setCategory(\Animales\CatalogoBundle\Entity\SubCategory $category = null)
+    public function setSubcategory(\Animales\CatalogoBundle\Entity\SubCategory $subcategory = null)
     {
-        $this->category = $category;
+        $this->subcategory = $subcategory;
     
         return $this;
     }
@@ -238,14 +219,37 @@ class Product
      *
      * @return \Animales\CatalogoBundle\Entity\SubCategory 
      */
-    public function getCategory()
+    public function getSubcategory()
     {
-        return $this->category;
+        return $this->subcategory;
     }
+
+    /**
+     * Set image
+     *
+     * @param \Animales\CatalogoBundle\Entity\Images $image
+     * @return SubCategory
+     */
+    public function setImage(\Animales\CatalogoBundle\Entity\Images $image = null)
+    {
+        $this->image = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Animales\CatalogoBundle\Entity\Images 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }    
 
 
     public function __toString()
-{
-    return $this->name;
-}
+    {
+        return $this->name;
+    }
 }

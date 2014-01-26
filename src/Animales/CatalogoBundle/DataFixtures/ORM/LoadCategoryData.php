@@ -32,7 +32,7 @@ class LoadCategoryData implements FixtureInterface
         /*-----------------------------------*/
         $perros_gatos = new Category();
         $perros_gatos->setId(2);
-        $perros_gatos->setName('Acuariofia');
+        $perros_gatos->setName('Perros y Gatos');
         $perros_gatos->setSlug('perros-y-gatos');
         $manager->persist($perros_gatos);
         /*-----------------------------------*/

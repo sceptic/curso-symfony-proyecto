@@ -33,7 +33,7 @@ class CategoryRepository extends EntityRepository
 
          $result= $query->useResultCache(true)->getArrayResult();
          $cacheDriver = new ApcCache();
-		 $cacheDriver->save('AllCategories', $result); 
+		     $cacheDriver->save('AllCategories', $result); 
         
 		return $result;
 	} 

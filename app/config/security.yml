@@ -1,19 +1,37 @@
 security:
     firewalls:
-        secured_area:
-            pattern:    ^/
+        # backend
+        admin:
+            pattern:    ^/admin
+            http_basic: ~
+            provider: administradores
+        # frontend
+        user:
+            pattern: ^/*
             anonymous: ~
-            http_basic:
-                realm: "Secured Demo Area"
+            provider: usuarios
+            form_login:
+                login_path: login
+                check_path: login_check
+            logout:
+                path: logout
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/usuario, roles: ROLE_USUARIO }
 
     providers:
-        in_memory:
+        # in_memory
+        # admin
+        administradores:
             memory:
                 users:
                     admin: { password: adrian, roles: 'ROLE_ADMIN' }
+        # frontend                
+        usuarios:
+            entity: { class: User\ZoneBundle\Entity\User, property: email }
+
 
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
+        User\ZoneBundle\Entity\User: { algorithm: sha512, iterations: 10 }

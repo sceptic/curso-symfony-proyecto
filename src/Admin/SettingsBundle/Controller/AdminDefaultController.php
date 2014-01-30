@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/xadmin")    
+ * @Route("/admin")    
  */
 class AdminDefaultController extends Controller
 {

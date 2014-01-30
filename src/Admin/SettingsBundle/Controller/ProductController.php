@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Animales\CatalogoBundle\Entity\Product;
 use Animales\CatalogoBundle\Form\ProductType;
+use Admin\SettingsBundle\Event\ProductEvent;
 
 /**
  * Product controller.
@@ -27,6 +28,7 @@ class ProductController extends Controller
      */
     public function indexAction()
     {
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('AnimalesCatalogoBundle:Product')->getAllProducts();
@@ -50,9 +52,15 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
+            
             $em->flush();
+
+            $dispa=$this->get('event_dispatcher');
+            $dispa->dispatch('product.create', 
+              new ProductEvent($entity));
 
             return $this->redirect($this->generateUrl('product_show', array('id' => $entity->getId())));
         }

@@ -1,0 +1,19 @@
+services:
+    # Para probar
+    test_service:
+        class: Animales\CatalogoBundle\Util\Test
+    # Debug variables
+    twig.extension.debug:
+        class: Twig_Extensions_Extension_Debug
+        tags:
+            - { name:twig.extension }
+    # Servicios Catalogo
+    model.catalogo:
+        class: Animales\CatalogoBundle\Model\Catalogo
+        arguments: [@service_container, AnimalesCatalogoBundle]
+    # Eventos
+    admin_settins.product_listener:
+        class: Admin\SettingsBundle\Event\ProductListener
+        arguments: [@logger]
+        tags:
+            - { name: kernel.event_listener, event: product.create, method: onProductCreate }

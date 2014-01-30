@@ -1,0 +1,10 @@
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    globals: 
+        global:
+            project_name: "Animal Chollo"
+            email_contact: "adriswbm@gmail.com"
+            phone_contact: "686 906 106"
+        functions: @model.catalogo

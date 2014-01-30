@@ -16,7 +16,7 @@ class SubCategoryType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description')
+            ->add('description','textarea')
             ->add('slug')
             ->add('category')
             ->add('image', new ImagesType())
@@ -29,7 +29,8 @@ class SubCategoryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Animales\CatalogoBundle\Entity\SubCategory'
+            'data_class' => 'Animales\CatalogoBundle\Entity\SubCategory',
+            'cascade_validation' => true,
         ));
     }
 

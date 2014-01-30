@@ -1,12 +1,12 @@
 <?php
 
-namespace Animales\CatalogoBundle\Form;
+namespace User\ZoneBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductType extends AbstractType
+class UserType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,12 +15,11 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('image', new ImagesType())
-            ->add('name')
-            ->add('slug')
-            ->add('ean13')
-            ->add('description')
-            ->add('subcategory')
+            ->add('username')
+            ->add('email')
+            ->add('password')
+            ->add('salt')
+            ->add('active')
         ;
     }
     
@@ -30,8 +29,7 @@ class ProductType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Animales\CatalogoBundle\Entity\Product',
-            'cascade_validation' => true,
+            'data_class' => 'User\ZoneBundle\Entity\User'
         ));
     }
 
@@ -40,6 +38,6 @@ class ProductType extends AbstractType
      */
     public function getName()
     {
-        return 'animales_catalogobundle_product';
+        return 'user_zonebundle_user';
     }
 }

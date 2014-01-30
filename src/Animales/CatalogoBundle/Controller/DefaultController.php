@@ -19,13 +19,15 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-    	$category = $this->getRepo('Category')
-        ->findAllCategories();
+    	$category = $this->getRepo()
+                         ->findAllCategories();
 
 	    if (!$category) {
 	        throw $this->createNotFoundException('No hay categorias');  
-	    }	
-        return array('page' => 'home', 'category'=> $category, 'debug_var'=>$category);    
+	    }
+        $t = $this->get('test_service');
+        $t_= $t->testing();
+        return array('page' => 'home', 'category'=> $category, 'debug_var'=>$category, 'test'=>$t_);    
     }
 
 
@@ -38,7 +40,7 @@ class DefaultController extends Controller
     public function categoriaAction($slug, $error=null )
     {
     	//slug categorias
-    	$category = $this->getRepo('SubCategory')
+    	$category = $this->getRepo()
         ->findAllCategory($slug);
 
         $params = array('page' => $slug, 'category'=> $category, 'debug_var'=>$category);
@@ -64,7 +66,7 @@ class DefaultController extends Controller
     public function catalogoAction($slug)
     {
     	//slug subcategorias
-    	$products = $this->getRepo('SubCategory')
+    	$products = $this->getRepo()
     					 ->findSubCategoryProducts($slug);
     	if($products)
         	return array('page' => 'productos', 'products'=> $products, 'debug_var'=>$products );
@@ -74,15 +76,22 @@ class DefaultController extends Controller
     }
 
 
+    /**
+     * @Route("/logout", name="logout")
+     * catalogo
+     */
+    public function logoutAction(){}
+    
+
+
 // Métodos privados 
 // ================
     /**
      * Get repository method
      */
-    private function getRepo($entity){
+    private function getRepo(){
     	$this->clearCacheApc();
-    	return $this->getDoctrine()
-        ->getRepository('AnimalesCatalogoBundle:'.$entity);
+    	return $this->get('model.catalogo');
     }
 
     /**
@@ -91,9 +100,5 @@ class DefaultController extends Controller
     private function clearCacheApc(){
     	apc_clear_cache();
     }
-
-
-
-    
 
 }

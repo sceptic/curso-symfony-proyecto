@@ -17,7 +17,7 @@
               <ul class="nav navbar-nav">
 
               <li {% if page == 'home' %} class='active'{% endif %}><a href='{{path( 'home')}}'>Home</a></li> 
-              {% for item in functions.navData() %}
+              {% for item in functions.findAllCategories() %}
                 <li {% if page == item.slug %} class='active'{% endif %}><a href='{{path( 'animales', {'slug':item.slug})}}'>{{item.name}}</a></li> 
               {% endfor %}
             </ul>

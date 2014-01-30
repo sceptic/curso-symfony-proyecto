@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block content -%}
+
+   Login
+   <form action="{{path("login_check")}}" method="post" accept-charset="utf-8">
+   <label>Email</label> <input type="email" name="_username" value="" placeholder="your mail">
+   <label>Password</label><input type="password" name="_password" value="">
+   <input type="submit" name="" value="Login">     
+   </form>
+
+{% endblock %}

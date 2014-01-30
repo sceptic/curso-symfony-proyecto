@@ -2,6 +2,7 @@
 
 {% block adminHeading -%}Listado de productos{% endblock %}
 {% block admin %}
+<div class="table-responsive" >
 <table class="table table-striped">
         <thead>
             <tr>
@@ -39,5 +40,6 @@
             <tr><td colspan="8"><p><a class="btn btn-default" href="{{ path('product_new') }}">Nuevo producto</a></p></td></tr>
         </tfoot>
     </table>
+</div>
 {% endblock %}
 

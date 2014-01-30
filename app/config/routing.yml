@@ -13,3 +13,9 @@ admin_settings:
     type:     annotation
     prefix:   /
 
+login:
+    pattern:   /login
+    defaults:  { _controller: AnimalesCatalogoBundle:Login:index }
+login_check:
+    pattern:   /login_check
+

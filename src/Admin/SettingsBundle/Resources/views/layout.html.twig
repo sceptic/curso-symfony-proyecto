@@ -2,11 +2,11 @@
 
 {% block content -%}
 
-<div class="panel panel-default col-sm-10">
+<div class="panel panel-default col-sm-8">
   <div class="panel-heading">{% block adminHeading %}{% endblock %}</div>
 	<div class="panel-body">
     {% block admin %}{% endblock %}
-    </div>
+  </div>
 </div>
 
 <div class="col-sm-2">
@@ -33,7 +33,7 @@
 $(document).ready(function (){
 
 	$("form div").addClass('form-group');
-	$("input[type='text'], select").addClass('form-control');
+	$("input[type='text'], select,textarea").addClass('form-control');
 	$("form button[type='submit']").addClass('btn btn-primary');
 	$("form input[type='text']").addClass('form-control');
 });	

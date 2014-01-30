@@ -1,28 +1,27 @@
 <?php
 
-namespace Admin\SettingsBundle\Controller;
+namespace User\ZoneBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Animales\CatalogoBundle\Entity\Category;
-use Animales\CatalogoBundle\Form\CategoryType;
-
+use User\ZoneBundle\Entity\User;
+use User\ZoneBundle\Form\UserType;
 
 /**
- * Category controller.
+ * User controller.
  *
- * @Route("/category")
+ * @Route("/registro")
  */
-class CategoryController extends Controller
+class UserController extends Controller
 {
 
     /**
-     * Lists all Category entities.
+     * Lists all User entities.
      *
-     * @Route("/", name="category")
+     * @Route("/", name="registro")
      * @Method("GET")
      * @Template()
      */
@@ -30,31 +29,39 @@ class CategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AnimalesCatalogoBundle:Category')->findAll();
+        $entities = $em->getRepository('UserZoneBundle:User')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
+    
     /**
-     * Creates a new Category entity.
+     * Creates a new User entity.
      *
-     * @Route("/", name="category_create")
+     * @Route("/", name="registro_create")
      * @Method("POST")
-     * @Template("AnimalesCatalogoBundle:Category:new.html.twig")
+     * @Template("UserZoneBundle:User:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Category();
+        $entity = new User();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            
+            $factory = $this->container->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($entity);
+            $entity->setSalt(md5(uniqid()));
+            $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt()); 
+            $entity->setPassword($password);
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('category_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('registro_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -64,16 +71,16 @@ class CategoryController extends Controller
     }
 
     /**
-    * Creates a form to create a Category entity.
+    * Creates a form to create a User entity.
     *
-    * @param Category $entity The entity
+    * @param User $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Category $entity)
+    private function createCreateForm(User $entity)
     {
-        $form = $this->createForm(new CategoryType(), $entity, array(
-            'action' => $this->generateUrl('category_create'),
+        $form = $this->createForm(new UserType(), $entity, array(
+            'action' => $this->generateUrl('registro_create'),
             'method' => 'POST',
         ));
 
@@ -83,15 +90,15 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a form to create a new Category entity.
+     * Displays a form to create a new User entity.
      *
-     * @Route("/new", name="category_new")
+     * @Route("/new", name="registro_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Category();
+        $entity = new User();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -101,9 +108,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Finds and displays a Category entity.
+     * Finds and displays a User entity.
      *
-     * @Route("/{id}", name="category_show")
+     * @Route("/{id}", name="registro_show")
      * @Method("GET")
      * @Template()
      */
@@ -111,10 +118,10 @@ class CategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
+        $entity = $em->getRepository('UserZoneBundle:User')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
+            throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -126,9 +133,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Category entity.
+     * Displays a form to edit an existing User entity.
      *
-     * @Route("/{id}/edit", name="category_edit")
+     * @Route("/{id}/edit", name="registro_edit")
      * @Method("GET")
      * @Template()
      */
@@ -136,10 +143,10 @@ class CategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
+        $entity = $em->getRepository('UserZoneBundle:User')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
+            throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -153,16 +160,16 @@ class CategoryController extends Controller
     }
 
     /**
-    * Creates a form to edit a Category entity.
+    * Creates a form to edit a User entity.
     *
-    * @param Category $entity The entity
+    * @param User $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Category $entity)
+    private function createEditForm(User $entity)
     {
-        $form = $this->createForm(new CategoryType(), $entity, array(
-            'action' => $this->generateUrl('category_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new UserType(), $entity, array(
+            'action' => $this->generateUrl('registro_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -171,20 +178,20 @@ class CategoryController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Category entity.
+     * Edits an existing User entity.
      *
-     * @Route("/{id}", name="category_update")
+     * @Route("/{id}", name="registro_update")
      * @Method("PUT")
-     * @Template("AnimalesCatalogoBundle:Category:edit.html.twig")
+     * @Template("UserZoneBundle:User:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
+        $entity = $em->getRepository('UserZoneBundle:User')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
+            throw $this->createNotFoundException('Unable to find User entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -194,7 +201,7 @@ class CategoryController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('category_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('registro_edit', array('id' => $id)));
         }
 
         return array(
@@ -204,9 +211,9 @@ class CategoryController extends Controller
         );
     }
     /**
-     * Deletes a Category entity.
+     * Deletes a User entity.
      *
-     * @Route("/{id}", name="category_delete")
+     * @Route("/{id}", name="registro_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -216,21 +223,21 @@ class CategoryController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AnimalesCatalogoBundle:Category')->find($id);
+            $entity = $em->getRepository('UserZoneBundle:User')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Category entity.');
+                throw $this->createNotFoundException('Unable to find User entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('category'));
+        return $this->redirect($this->generateUrl('registro'));
     }
 
     /**
-     * Creates a form to delete a Category entity by id.
+     * Creates a form to delete a User entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -239,7 +246,7 @@ class CategoryController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('category_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('registro_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

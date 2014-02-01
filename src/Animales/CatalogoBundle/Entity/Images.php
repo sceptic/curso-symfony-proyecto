@@ -243,7 +243,6 @@ class Images
     {
         $this->file = $file;
         $this->upload();
-
     }
 
     /**
@@ -269,13 +268,14 @@ class Images
 
         // move takes the target directory and then the
         // target filename to move to
+        $new_name = time().'.'.$this->getFile()->guessExtension();
         $this->getFile()->move(
             $this->getUploadRootDir(),
-            $this->getFile()->getClientOriginalName()
+            $new_name
         );
 
         // set the path property to the filename where you've saved the file
-        $this->path = $this->getFile()->getClientOriginalName();
+        $this->path = $new_name;
 
         // clean up the file property as you won't need it anymore
         $this->file = null;

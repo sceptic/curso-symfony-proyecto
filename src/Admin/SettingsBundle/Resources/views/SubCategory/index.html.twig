@@ -1,11 +1,13 @@
-{% extends 'AdminSettingsBundle::layout.html.twig' %}
+{% extends 'AdminSettingsBundle::base.html.twig' %}
 
 {% block adminHeading -%}Listado subcategorias{% endblock %}
 {% block admin %}
-<table class="table">
+<div class="table-responsive" >
+<table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Imágen</th>
                 <th>Nombre</th>
                 <th>Categoria</th>
                 <th>Descripción</th>
@@ -17,6 +19,7 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('subcategory_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><img  data-src="{{asset('uploads/'~entity.image.path)}}" src="{{asset('uploads/'~entity.image.path)}}" alt="{{entity.image.path}}"></td>
                 <td>{{ entity.name }}</td>
                 <td>{{ entity.category.name }}</td>
                 <td>{{ entity.description }}</td>
@@ -33,8 +36,6 @@
         {% endfor %}
         </tbody>
     </table>
-<hr/>
-            <a class="btn btn-default"  href="{{ path('subcategory_new') }}">
-                Nueva subcategoria
-            </a>
+<p><a class="btn btn-default"  href="{{ path('subcategory_new') }}">Nueva subcategoria</a></p>
+</div>
 {% endblock %}

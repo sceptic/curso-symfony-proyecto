@@ -2,3 +2,6 @@ body {
 background-color: #D3A900;
 }
 .content{ padding:20px;}
+
+.thumb img{ max-height: 100px;}
+.prod img{ max-height: 400px;}

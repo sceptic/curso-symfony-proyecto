@@ -1,8 +1,9 @@
-{% extends 'AdminSettingsBundle::layout.html.twig' %}
+{% extends 'AdminSettingsBundle::base.html.twig' %}
 
 {% block adminHeading -%}Categoria{% endblock %}
 {% block admin %}
-<table class="table">
+<div class="table-responsive" >
+<table class="table table-striped">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -26,6 +27,7 @@
             Editar
         </a>
 {{ form(delete_form) }}
+</div>
 {% endblock %}
 
 

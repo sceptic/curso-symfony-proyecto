@@ -21,6 +21,7 @@ class SubCategory
     protected $products; 
 
     /**
+     * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="subcategories", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
@@ -28,6 +29,7 @@ class SubCategory
 
 
     /**
+     * @Assert\NotNull()
      * @ORM\ManyToOne(targetEntity="Images", inversedBy="subcategories", cascade={"persist"})
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
@@ -59,8 +61,8 @@ class SubCategory
 
     /**
      * @var integer
-     *
      * @ORM\Column(name="category_id", type="integer")
+     * 
      */
     private $categoryId;
 

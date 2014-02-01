@@ -1,0 +1,37 @@
+<header>
+	    <div class="navbar navbar-static-top">
+	      <div class="navbar-inner">
+	        <div class="container">
+	          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+
+              <!-- ==== -->
+              <!-- LOGO -->
+              <!-- ==== -->
+	          <a class="brand" href="/"><img src="assets/img/logo.jpg"></a>
+
+	          <div class="nav-collapse collapse">
+	                <ul class="nav">
+	                        <li {% if page == 'home' %} class='active'{% endif %}><a href='{{path( 'home')}}'>{{'inicio.web'|trans|capitalize}}</a></li> 
+              {% for item in functions.findAllCategories() %}
+                <li {% if page == item.slug %} class='active'{% endif %}><a href='{{path( 'animales', {'slug':item.slug})}}'>{{item.name}}</a></li> 
+              {% endfor %}
+	                    <li class="hidden-desktop"><a class="closeNav" data-toggle="collapse" data-target=".nav-collapse">↑</a></li>
+	                    </ul>
+	          </div>
+	          <div class="hiddenNav">
+	                <ul class="secondNav">
+	                        <li {% if page == 'home' %} class='active'{% endif %}><a href='{{path( 'home')}}'>{{'inicio.web'|trans|capitalize}}</a></li> 
+              {% for item in functions.findAllCategories() %}
+                <li {% if page == item.slug %} class='active'{% endif %}><a href='{{path( 'animales', {'slug':item.slug})}}'>{{item.name}}</a></li> 
+              {% endfor %}
+	                    <li class="hidden-desktop"><a class="closeNav" data-toggle="collapse" data-target=".nav-collapse">↑</a></li>
+	                    </ul>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+</header>

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block content -%}
+
+<div class="row text-center">
+          <div class="prod thumbnail">
+            <img data-src="{{asset('uploads/'~entity.image.path)}}" src="{{asset('uploads/'~entity.image.path)}}" alt="{{entity.name}}">
+            <div class="caption">
+              <h2>{{'producto'|trans}}: <small>{{entity.name}}<small></h2>
+              <p><strong>EAN13:</strong> {{entity.ean13}}</p>
+              <p><strong>{{'Descrición'|trans}}:</strong> {{entity.description}}</p>
+            </div>
+          </div>
+</div>
+{% endblock %}

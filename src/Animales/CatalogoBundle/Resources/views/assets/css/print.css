@@ -1,0 +1,134 @@
+body#programme{
+    color: #000;
+}
+
+#programme header{
+    margin-bottom: 10px;
+}
+
+#programme #staticBannerContainer{
+    display: none;
+}
+
+#programme .navbar .brand{
+    float: none;
+    position: static;
+}
+
+#programme .imageContent{ 
+    display: none;
+}
+
+#programme [class*="span"]{
+    margin-bottom: 15px;
+    margin-left: 0;
+    margin-right: 5px;
+}
+
+#programme .contentPanel{
+    border: 1px solid black;
+    padding: 2px;
+}
+
+#programme .row{    
+    margin-left: 0;
+    max-width: 600px;
+}
+
+#programme .row:after{
+    clear: none;
+}
+
+#programme .row .imageTextContent{
+    padding-top: 0;
+    position: static;
+    width: auto;
+}
+
+#programme .row .textContent{
+    background: transparent;
+}
+
+#programme .row .textContent p{
+    padding: 0;
+}
+
+#programme .tab-content > .tab-pane, 
+#programme .pill-content > .pill-pane, 
+#programme .tab-pane
+{
+    display: block;
+}
+
+#programme .row .textContent.lines1 p:first-child,
+#programme .row .textContent.lines2 p:first-child{
+    padding-top: 0;
+}
+
+#programme .row .textContent.speakerContent, 
+#programme .row .textContent.programmeContent, 
+#programme .row .textContent.workshopContent{
+    height: auto;
+}
+
+#programme .row .imageTextContent p
+{
+    font-size: 1em;
+    display: inline;
+}
+
+#programme .row .imageTextContent p + p{
+    font-size: 1em;
+}
+
+#programme .row .imageTextContent p + p:before{
+    content: ' - ';
+}
+
+#programme footer{
+    background: #fff;
+    color: #000 !important;
+    display: none;
+}
+
+#programme footer a{
+    color: #000 !important;
+}
+
+#programme header .nav-collapse{
+    display: none;
+    visibility: hidden;
+}
+
+#programme #myTab{
+    display: none;
+}
+
+#programme #saturday,
+#programme #sunday{
+    margin-top: 20px;
+    display: inline-block;
+    width: 330px;
+}
+
+#programme #saturday:before{
+    content: 'Saturday';
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#programme #sunday:before{
+    content: 'Sunday';
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#programme .span4{
+    width: 325px;
+}
+
+#programme #saturday{
+    margin-right: 20px;
+}

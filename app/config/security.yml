@@ -11,7 +11,7 @@ security:
             anonymous: ~
             provider: usuarios
             form_login:
-                login_path: login
+                login_path: home
                 check_path: login_check
             logout:
                 path: logout

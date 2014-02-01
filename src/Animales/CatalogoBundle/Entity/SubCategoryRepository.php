@@ -4,6 +4,7 @@ namespace Animales\CatalogoBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Cache\ApcCache;
+use Doctrine\ORM\Query\ResultSetMapping;
 /**
  * SubCategoryRepository
  *
@@ -19,11 +20,12 @@ class SubCategoryRepository extends EntityRepository
 	 */
 	public function findSubCategoryProducts($slug){
 		$em = $this->getEntityManager();
-		$dql =  'SELECT s,p,
+		$dql =  'SELECT s,p,i,
 						c.name, c.slug
                  FROM AnimalesCatalogoBundle:SubCategory s
                  JOIN s.products p
                  JOIN s.category c
+                 JOIN p.image i
                  WHERE s.slug = :slug';
 
         $query = $em->createQuery($dql)
@@ -42,7 +44,7 @@ class SubCategoryRepository extends EntityRepository
 	 */
 	public function findAllCategory($slug){
 		// slug categoria
-		$em = $this->getEntityManager($slug);
+		$em = $this->getEntityManager();
 		$dql= 'SELECT  s,p,
 						c.name, c.slug,
 						COUNT(p.id) as number_products
@@ -74,7 +76,7 @@ class SubCategoryRepository extends EntityRepository
 	 */
 	public  function findAllCS($slug){
 		// slug categoria
-		$em = $this->getEntityManager($slug);
+		$em = $this->getEntityManager();
 		$dql= 'SELECT 
                c,s
                FROM 
@@ -93,4 +95,5 @@ class SubCategoryRepository extends EntityRepository
         
 		return $result;
 	} 
+    
 }

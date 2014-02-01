@@ -1,19 +1,12 @@
 {% import "macros.html" as macros %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset={{ _charset }}"/>
-        <meta name="robots" content="noindex,nofollow" />
-        <title>{% block title %}{% endblock %}</title>
-         <link href="{{ asset('bundles/assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
-         <link href="{{ asset('bundles/assets/css/bootstrap-theme.css') }}" rel="stylesheet" type="text/css" media="all" />
-         <link href="{{ asset('bundles/assets/css/style.css') }}" rel="stylesheet" type="text/css" media="all" />
-        {% block head %}{% endblock %}
-    </head>
+    {% include '::head.html.twig' %}
+    
     <body>
-
+{% include '::header.html.twig' %}  
     <div class="container">
-      {% include '::header.html.twig' %}
+      
       
       {% if warning is defined %}
        {{macros.warning(warning)}}
@@ -26,19 +19,15 @@
       {% include '::footer.html.twig' %}
     </div>
 
-{# DEBUGING VARS #}       
+
+{# DEBUGING VARS #}  
 {% if debug_var  is defined %}
 <pre>{% debug debug_var %}</pre>
-{% else %}
-<h4>DEBUG OFF</h4>
 {% endif %}
+     
+{% include '::js.html.twig' %}        
+</body>
 
-        <script src="{{ asset('bundles/assets/js/jquery.js') }}"></script>
-        <script src="{{ asset('bundles/assets/js/bootstrap.js') }}"></script>
-        <script src="{{ asset('bundles/assets/js/holder.js') }}"></script>
-        {% block scripts %}{% endblock %}
-        
-    </body>
 </html>
 
 

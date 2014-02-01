@@ -1,21 +1,35 @@
 animales_catalogo:
     resource: "@AnimalesCatalogoBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /{_locale}
+    defaults:  { _locale: %locale% }
+    requirements:
+        _locale: en|es
+
+init_route:
+    pattern:   /
+    defaults:  { _controller: AnimalesCatalogoBundle:Default:index, _locale: %locale% }
 
 user_zone:
-    resource: "@UserZoneBundle/Controller/"
+    resource: "@UserZoneBundle/Controller/DefaultController.php"
     type:     annotation
-    prefix:   /
-
-admin_settings:
-    resource: "@AdminSettingsBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
+    prefix:   /usuario
+    
 login:
     pattern:   /login
     defaults:  { _controller: AnimalesCatalogoBundle:Login:index }
 login_check:
     pattern:   /login_check
+
+user_acount:
+    resource: "@UserZoneBundle/Controller/UserController.php"
+    type:     annotation
+    prefix:   /cuenta
+
+admin_settings:
+    resource: "@AdminSettingsBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
+
 

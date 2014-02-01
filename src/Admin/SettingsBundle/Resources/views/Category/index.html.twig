@@ -1,9 +1,10 @@
-{% extends 'AdminSettingsBundle::layout.html.twig' %}
+{% extends 'AdminSettingsBundle::base.html.twig' %}
 
 {% block adminHeading -%}Listado de categorias{% endblock %}
 {% block admin %}
 
-<table class="table">
+<div class="table-responsive" >
+<table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -31,4 +32,5 @@
 <a class="btn btn-default"  href="{{ path('category_new') }}">
                 Create a new entry
             </a>
+</div>
 {% endblock %}

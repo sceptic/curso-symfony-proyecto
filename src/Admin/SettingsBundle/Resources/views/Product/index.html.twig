@@ -1,4 +1,4 @@
-{% extends 'AdminSettingsBundle::layout.html.twig' %}
+{% extends 'AdminSettingsBundle::base.html.twig' %}
 
 {% block adminHeading -%}Listado de productos{% endblock %}
 {% block admin %}
@@ -20,7 +20,7 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('product_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{entity.image.path}}</td>
+                <td><img  data-src="{{asset('uploads/'~entity.image.path)}}" src="{{asset('uploads/'~entity.image.path)}}" alt="{{entity.name}}"></td>
                 <td>{{ entity.name }}</td>
                 <td>{{ entity.slug }}</td>
                 <td>{{ entity.subcategory.name }}</td>
@@ -36,10 +36,8 @@
             </tr>
         {% endfor %}
         </tbody>
-        <tfoot>
-            <tr><td colspan="8"><p><a class="btn btn-default" href="{{ path('product_new') }}">Nuevo producto</a></p></td></tr>
-        </tfoot>
     </table>
+    <p><a class="btn btn-default" href="{{ path('product_new') }}">Nuevo producto</a></p>
 </div>
 {% endblock %}
 

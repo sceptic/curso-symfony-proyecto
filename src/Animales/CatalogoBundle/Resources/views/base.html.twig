@@ -1,0 +1,33 @@
+{% import "macros.html" as macros %}
+
+<!DOCTYPE html>
+<html style="" class="">
+{% include 'head.html.twig' %}
+<body id="home">
+<!-- ===================================
+ HEADER 
+ =================================== -->
+{% include 'header.html.twig' %}
+ 
+      
+<!-- Body content
+================================================== -->
+
+<div class="container">
+    
+<!-- H.ROW -->
+<div class="row">
+{% block head_content %}
+
+{% endblock %}
+</div>
+<!-- END H.ROW -->
+
+<!-- Main CONTENT -->
+ {% block content %}{% endblock %}
+<!-- END MAIN CONTENT -->
+</div>
+
+{% include 'footer.html.twig' %}	
+</body>
+</html>

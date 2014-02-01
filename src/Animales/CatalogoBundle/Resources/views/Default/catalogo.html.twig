@@ -1,5 +1,7 @@
 {% extends '::base.html.twig' %}
 {% block content -%}
+
+
 <div class="jumbotron">
         <h1>CATÁLOGO: <small>{{products[0][0].name|upper}}</small></h1>
         <p class="lead">{{products[0][0].description}}</p>
@@ -7,15 +9,19 @@
       </div>
 
       {% for prod in products[0][0].products%}
+
+        <div class="col-sm-4 col-md-4 text-center">
+          <div class="thumb thumbnail">
+            <img data-src="{{asset('uploads/'~prod.image.path)}}" src="{{asset('uploads/'~prod.image.path)}}" alt="...">
+            <div class="caption">
+              <h3>{{prod.name}}</h3>
+              <p>
+                <a href="{{path('producto', { 'slug': prod.slug, 'id' : prod.id})}}" class="btn btn-primary" role="button">Ver</a>
+                <a href="#" class="btn btn-default" role="button">Botón</a>
+              </p>
+            </div>
+          </div>
+        </div>
       
-      <div class="col-md-4 text-center">
-      
-      	<h3>{{prod.name}}</h3>
-      	<a href="#" class="thumbnail">
-      		<img data-src="holder.js/100%x180" alt="...">
-    	</a>
-      	<p>{{prod.description}}</p>
-      	<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
       {% endfor %}
 {% endblock %}

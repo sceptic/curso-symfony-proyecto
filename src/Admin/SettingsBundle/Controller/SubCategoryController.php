@@ -38,12 +38,15 @@ class SubCategoryController extends Controller
             'entities' => $entities,
         );
     }
+
+
+
     /**
      * Creates a new SubCategory entity.
      *
      * @Route("/", name="subcategory_create")
      * @Method("POST")
-     * @Template("AnimalesCatalogoBundle:SubCategory:new.html.twig")
+     * @Template("AdminSettingsBundle:SubCategory:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -58,7 +61,7 @@ class SubCategoryController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('subcategory_show', array('id' => $entity->getId())));
-        }
+        }else{ echo "ERROR";}
 
         return array(
             'entity' => $entity,
@@ -80,7 +83,7 @@ class SubCategoryController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Crear'));
 
         return $form;
     }
@@ -169,10 +172,11 @@ class SubCategoryController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Modificar'));
 
         return $form;
     }
+
     /**
      * Edits an existing SubCategory entity.
      *

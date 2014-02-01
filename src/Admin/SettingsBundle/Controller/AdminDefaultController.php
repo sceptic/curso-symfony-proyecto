@@ -14,12 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminDefaultController extends Controller
 {
     /**
-     * @Route("/home")
-     * @Route("/home/{name}")
+     * @Route("/")
      * @Template()
      * 
      */
-    public function indexAction($name='')
+    public function indexAction()
     {
         // Recuperar categorias
         
@@ -27,7 +26,7 @@ class AdminDefaultController extends Controller
 
         // Recuperar productos  
 
-        return array('page'=>'home','name' => "<strong>".$name."</strong>");
+        return array('page'=>'home','name' => " ");
     }
     
 

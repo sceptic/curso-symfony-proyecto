@@ -1,28 +1,18 @@
-{% extends 'AdminSettingsBundle::layout.html.twig' %}
+{% extends 'AdminSettingsBundle::base.html.twig' %}
 
 {% block adminHeading -%}Producto{% endblock %}
-{% block admin %}
-    <table class="table">
+{% block admin %}    
+<div class='thumbnail'><img width='200' height="300" data-src="{{asset('uploads/'~entity.image.path)}}" src="{{asset('uploads/'~entity.image.path)}}" alt="{{entity.name}}"></div>
+<div class="table-responsive" >
+<table class="table table-striped">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Imágen</th>
-                <td> </td>
-            </tr>
-            <tr>
-                <th>Name</th>
+                <th>Nombre</th>
                 <td>{{ entity.name }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ entity.slug }}</td>
-            </tr>
-            <tr>
-                <th>Subcategoryid</th>
-                <td>{{ entity.subcategoryId }}</td>
             </tr>
             <tr>
                 <th>Ean13</th>
@@ -33,8 +23,12 @@
                 <td>{{ entity.description }}</td>
             </tr>
             <tr>
-                <th>Img</th>
-                <td>{% debug ["1","2"] %}</td>
+                <th>Slug</th>
+                <td>{{ entity.slug }}</td>
+            </tr>
+            <tr>
+                <th>Subcategoria</th>
+                <td>{{ entity.subcategory.name }}</td>
             </tr>
         </tbody>
     </table>
@@ -45,8 +39,11 @@
         </a>
     
         <a class="btn btn-default" href="{{ path('product_edit', { 'id': entity.id }) }}">
-            Edit
+            Editar
         </a>
-    {{ form(delete_form) }}
+        <p>
+        {{ form(delete_form) }}</p>
+</div>
+
 
 {% endblock %}

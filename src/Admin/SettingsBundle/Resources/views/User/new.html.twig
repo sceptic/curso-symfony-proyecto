@@ -1,0 +1,11 @@
+{% extends 'AdminSettingsBundle::base.html.twig' %}
+{% block adminHeading -%}Crear usuario{% endblock %}
+{% block admin -%}
+
+    {{ form(form) }}
+
+        <a class="btn btn-default" href="{{ path('user') }}">
+           Volver a la lista
+        </a>
+
+{% endblock %}

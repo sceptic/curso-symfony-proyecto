@@ -95,5 +95,57 @@ class SubCategoryRepository extends EntityRepository
         
 		return $result;
 	} 
-    
+
+// 4: filterProducts
+    /**
+     * Filtrado productos [Categoria / Subcategoria, ASC / DESC, Indice, Limite]
+     */
+    public  function filterProducts($category = null, $subcategory = null, $sort = null ){
+
+        $em = $this->getEntityManager();
+
+        $where = ' ';
+
+        if( $category != null )
+        {
+            $where = 'WHERE c.id = :id';
+            $param = $category;
+        }
+
+        if( $subcategory != null )
+        {
+            $where = 'WHERE s.id = :id';
+            $param = $subcategory;
+        }
+
+        if( $sort != 'DESC' )
+        {
+            $sort = 'ASC';
+        }
+       
+        $dql =  "SELECT p,i,s,c
+                 FROM AnimalesCatalogoBundle:Product p
+                 JOIN p.subcategory s
+                 JOIN p.image i 
+                 JOIN s.category c ";
+        $dql.= $where;
+
+        $dql.=   " ORDER BY p.id ".$sort;
+        $query = $em->createQuery($dql);
+
+        if(isset($param)) $query = $query->setParameter(':id', (int) $param );
+        
+        /*
+        $query = $query->setMaxResults((int) $max);
+        $query = $query->setFirstResult((int) $first);
+        */
+
+        $result= $query->getArrayResult();
+        
+        return $result;
+    }
+
+
+
+
 }

@@ -58,10 +58,20 @@ class User implements UserInterface
     private $active = 0;
 
 
+    /**
+     * @var String
+     *
+     * @ORM\Column(name="role", type="string",  length=255, options={"default" = "ROLE_USUARIO"})
+     */
+    private $role = "ROLE_USUARIO";
+
+
 
     public function equals(UserInterface $user){
         return $this->getEmail() == $usuario ->getEmail();
     }
+
+
 
 // USERINTERFACE: ==========================
 
@@ -82,7 +92,9 @@ class User implements UserInterface
      * @return Role[] The user roles
      */
     public function getRoles(){
-        return array('ROLE_USUARIO');
+        if($this->getActive())
+            return array($this->role);
+        else return array();
     }
 
     /**
@@ -138,6 +150,19 @@ class User implements UserInterface
     {
         return $this->id;
     }
+
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+
 
     /**
      * Set username
@@ -248,5 +273,24 @@ class User implements UserInterface
     public function getActive()
     {
         return $this->active;
+    }
+
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     * @return User
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    
+        return $this;
+    }
+
+    
+    public function getUser(){
+        return $this;
     }
 }

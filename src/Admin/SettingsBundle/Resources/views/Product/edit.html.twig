@@ -2,6 +2,9 @@
 
 {% block adminHeading -%}Producto{% endblock %}
 {% block admin %}
-{{ form(edit_form) }}  {{ form(delete_form) }}    
-   <a class="btn btn-default" href="{{ path('product') }}">Lista productos</a>     
+{{ form(edit_form) }}  
+
+{{ form(delete_form) }}    
+<a class="btn btn-default" href="{{ path('product') }}">Lista productos</a>
+
 {% endblock %}

@@ -1,4 +1,8 @@
+{# VARS =====#}
 {% set allCategories = functions.findAllCategories() %}
+{% set this_User = app.security.getToken().getUser() %}
+{#===========#}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -47,21 +51,23 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="{{path('category')}}" >Categorias</a></li>
-  			<li><a href="{{path('subcategory')}}" >Subcategorias</a></li>
-  			<li><a href="{{path('product')}}">Productos</a></li>
+            <li><a href="{{path('subcategory')}}" >Subcategorias</a></li>
+            <li><a href="{{path('product')}}">Productos</a></li>
+            <li><a href="{{path('user')}}">Usuarios</a></li>
           </ul>
           <hr>
           <ul class="nav nav-sidebar">
+            <li><a href="{{path('home')}}"><h3>WEBSITE</h3></a></li>
            {% for item in allCategories %}
                 <li><a href='{{path( 'animales', {'slug':item.slug})}}'>{{item.name}}</a></li> 
-              {% endfor %}
+           {% endfor %}
           </ul>
 
           
           
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Adrian: adriswbm@gmail.com</h1>
+          <h1 class="page-header">Hola {{this_User.getName}}:{{this_User.getEmail}}</h1>
 
           <div class="row placeholders">
             
@@ -81,11 +87,16 @@
           <div class="table-responsive">
 
             {% block admin %}{% endblock %}
+            {# DEBUGING VARS #}  
+{% if debug_var  is defined %}
+<pre>{% debug debug_var %}</pre>
+{% endif %}
           </div>
 
         </div>
       </div>
     </div>
+
 
     
     <script src="{{ asset('bundles/assets/js/jquery.js') }}"></script>
@@ -95,7 +106,7 @@
 $(document).ready(function (){
 
 	$("form div").addClass('form-group');
-	$("input[type='text'], select,textarea").addClass('form-control');
+	$("input[type='text'], input[type='email'],input[type='password'],input[type='number'],  select,textarea").addClass('form-control');
 	$("form button[type='submit']").addClass('btn btn-primary');
 	$("form input[type='text']").addClass('form-control');
 });	

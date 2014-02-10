@@ -3,6 +3,46 @@
 {% block adminHeading -%}Listado de productos{% endblock %}
 {% block admin %}
 <div class="table-responsive" >
+<form action="" method="post">
+            <label>Categoria:<select name="category">
+                <option value=""></option>
+                {% for item in allCategories %}
+                    <option value='{{item.id}}'>{{item.name}}</option> 
+                {% endfor %}
+                
+            </select></label>
+            <label>Subcategoria:<select name="subcategory">
+                <option value=""></option>
+                {% for item in subcategories %}
+                    <option value='{{item.id}}'>{{item.name}}</option> 
+                {% endfor %}
+                
+            </select></label>
+
+            <label>Orden:<select name="order">
+                <option value=""></option>
+                <option value="ASC">Ascendente</option>
+                <option value="DESC">Descente</option>
+
+            </select>
+            </label> 
+            <label>Número de productos:
+            <select name="num">
+                <option value=""></option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+
+            </select>
+
+            </label>
+
+            <input type="submit" value='filtrar' class="btn btn-primary" />
+
+        </form>
 <table class="table table-striped">
         <thead>
             <tr>
@@ -37,6 +77,9 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="navigation">
+       {{ knp_pagination_render(entities) }}
+    </div>
     <p><a class="btn btn-default" href="{{ path('product_new') }}">Nuevo producto</a></p>
 </div>
 {% endblock %}

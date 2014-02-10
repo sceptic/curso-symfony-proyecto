@@ -23,21 +23,59 @@ class ProductController extends Controller
      * Lists all Product entities.
      *
      * @Route("/", name="product")
-     * @Method("GET")
+     * @Method("GET|POST")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        
+        $session = $this->getRequest()->getSession();
 
+        // Defaults
+        if(!$session->get('filterProduct') || $request->get('page') == null)
+            $session->set('filterProduct', array("subcategory"=>'', "category" =>'', "order"=>'', 'num'=>10));
+        
+        if(!$session->get('numProducts')  || $request->get('page') == null)
+            $session->set('numProducts', 10);
+        
+        // Filtro resultados
+        if ($request->isMethod('POST'))
+        {
+            $filsubcategory = $request->get('subcategory');
+            $filcategory = $request->get('category');
+            $filorder = $request->get('order');
+            $filNum = $request->get('num');
+            $session->set('filterProduct', array("subcategory"=>$filsubcategory, "category" =>$filcategory, "order"=>$filorder));
+
+            if($filNum != null )
+              $session->set('numProducts', $filNum);
+        }
+
+        $filter = $session->get('filterProduct');
+        $numPro = $session->get('numProducts');
+        
         $em = $this->getDoctrine()->getManager();
+        $subcategories = $em->getRepository('AnimalesCatalogoBundle:SubCategory')->findAll();
+        //$entities = $em->getRepository('AnimalesCatalogoBundle:Product')->getAllProducts();
 
-        $entities = $em->getRepository('AnimalesCatalogoBundle:Product')->getAllProducts();
+        $entities = $em->getRepository('AnimalesCatalogoBundle:SubCategory')
+                       ->filterProducts($filter['category'] , $filter['subcategory'], $filter['order']);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($entities,
+                      $this->getRequest()->query->get('page', 1), $numPro);
+
 
         return array(
-            'entities' => $entities,
-            'debug_var'=> $entities
+            'subcategories'=>$subcategories,
+            'entities' => $pagination,
+            'debug_var'=> $pagination
         );
     }
+
+
+
+
     /**
      * Creates a new Product entity.
      *

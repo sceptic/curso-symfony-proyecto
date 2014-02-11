@@ -4,11 +4,16 @@ security:
         #admin:
         #    pattern:    ^/admin
         #    http_basic: ~
-        #    provider: administradores
+        #    provider: admins
         admin:
-            pattern:    ^/admin
-            http_basic: ~
+            pattern: ^/admin
+            anonymous: ~
             provider: admins
+            form_login:
+                login_path: admin_login
+                check_path: admin_check
+            logout:
+                path: logout
         # frontend
         user:
             pattern: ^/*

@@ -116,6 +116,14 @@ class DefaultController extends Controller
     public function logoutAction(){}
 
     /**
+     * @Route("/logout-admin", name="admin_logout")
+     * catalogo
+     */
+    public function logoutAdminAction(){
+       //
+    }
+
+    /**
      * @Route("/locale/{locale}", name="locale")
      * catalogo
      */

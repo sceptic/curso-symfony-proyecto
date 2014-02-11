@@ -20,11 +20,11 @@
 
     <div class="container">
 
-      <form action="{{path("login_check")}}" method="post"  navbar" role="form">
+      <form class="form-signin" action="{{path("admin_check")}}" method="post"  role="form">
         <h2 class="form-signin-heading">Administración</h2>
         <input type="email" name="_username" class="form-control" placeholder="Email address" required autofocus>
         <input type="password" name="_password" class="form-control" placeholder="Password" required>
-       
+        <input type="hidden" name="_target_path" value="/admin/product" />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
       </form>
 

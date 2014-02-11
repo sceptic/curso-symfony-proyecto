@@ -3,20 +3,16 @@
 namespace Admin\SettingsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class DefaultController extends Controller
 {
+
 	/**
-     * Lists all Category entities.
-     *
-     * @Route("/", name="home_admin")
-     * @Method("GET")
      * @Template()
+     * login
      */
     public function indexAction(Request $request)
     {
@@ -41,6 +37,4 @@ class DefaultController extends Controller
         );   
     }
 
-
-    
 }

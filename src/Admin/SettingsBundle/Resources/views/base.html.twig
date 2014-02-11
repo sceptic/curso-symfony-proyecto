@@ -57,9 +57,15 @@
           </ul>
           <hr>
           <ul class="nav nav-sidebar">
-            <li><a href="{{path('home')}}"><h3>WEBSITE</h3></a></li>
+            <li ><a href="{{path('home')}}"><h2>WEBSITE</h2></a></li>
            {% for item in allCategories %}
-                <li><a href='{{path( 'animales', {'slug':item.slug})}}'>{{item.name}}</a></li> 
+                <li ><a href='{{path( 'animales', {'slug':item.slug})}}'><strong>{{item.name}}</strong></a></li>
+                {%set  subitem =  functions.findAllCS(item.slug)%}
+                {% for sb in subitem %}
+                  {% if sb.subcategories[0] is defined %}
+                  <li class='list-group-item'><a href='{{path( 'productos', {'slug':sb.subcategories[0].slug})}}'>{{ sb.subcategories[0].name}}</a>
+                  {%endif%}
+                {%endfor%}
            {% endfor %}
           </ul>
 
@@ -80,10 +86,12 @@
 
           </div>
 
+
           <h2 class="sub-header">
+
              {% block adminHeading %}{% endblock %}
           </h2>
-
+          
           <div class="table-responsive">
 
             {% block admin %}{% endblock %}
@@ -103,12 +111,14 @@
 	  <script src="{{ asset('bundles/assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('bundles/assets/js/docs.js') }}"></script>
     <script>
-$(document).ready(function (){
+$(function (){
 
 	$("form div").addClass('form-group');
 	$("input[type='text'], input[type='email'],input[type='password'],input[type='number'],  select,textarea").addClass('form-control');
 	$("form button[type='submit']").addClass('btn btn-primary');
 	$("form input[type='text']").addClass('form-control');
+  $('.pagination a').addClass('btn btn-primary');
+  $('.pagination .current').addClass('btn btn-default');
 });	
 
 </script>

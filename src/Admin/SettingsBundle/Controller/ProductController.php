@@ -56,7 +56,7 @@ class ProductController extends Controller
         
         $em = $this->getDoctrine()->getManager();
         $subcategories = $em->getRepository('AnimalesCatalogoBundle:SubCategory')->findAll();
-        //$entities = $em->getRepository('AnimalesCatalogoBundle:Product')->getAllProducts();
+        
 
         $entities = $em->getRepository('AnimalesCatalogoBundle:SubCategory')
                        ->filterProducts($filter['category'] , $filter['subcategory'], $filter['order']);

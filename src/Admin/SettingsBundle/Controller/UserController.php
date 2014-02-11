@@ -185,23 +185,22 @@ class UserController extends Controller
      * @Template("UserZoneBundle:User:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
-    {
+    { 
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('UserZoneBundle:User')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('No hay ningun usuario con ese id');
         }
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
-
+         
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('user_show', array('id' => $id)));
         }
 
         return array(

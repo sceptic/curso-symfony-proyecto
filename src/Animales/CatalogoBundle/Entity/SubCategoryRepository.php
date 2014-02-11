@@ -98,7 +98,7 @@ class SubCategoryRepository extends EntityRepository
 
 // 4: filterProducts
     /**
-     * Filtrado productos [Categoria / Subcategoria, ASC / DESC, Indice, Limite]
+     * Filtrado productos [Categoria / Subcategoria, ASC / DESC]
      */
     public  function filterProducts($category = null, $subcategory = null, $sort = null ){
 
@@ -136,8 +136,9 @@ class SubCategoryRepository extends EntityRepository
         if(isset($param)) $query = $query->setParameter(':id', (int) $param );
         
         /*
-        $query = $query->setMaxResults((int) $max);
-        $query = $query->setFirstResult((int) $first);
+        paginar:
+          $query = $query->setMaxResults((int) $max);
+          $query = $query->setFirstResult((int) $first);
         */
 
         $result= $query->getArrayResult();

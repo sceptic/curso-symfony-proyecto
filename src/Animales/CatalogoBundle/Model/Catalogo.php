@@ -20,7 +20,7 @@ class Catalogo{
 	}
 
 
-// Category Repo
+// Subcategory Repo
 //==============
 	public  function findAllCategory($slug){
 		return $this->getRepo('SubCategory')->findAllCategory($slug);

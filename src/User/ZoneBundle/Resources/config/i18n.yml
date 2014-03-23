@@ -1,0 +1,4 @@
+registro_new:
+    locales:  { en: "/wel", es: "/bien" }
+    defaults: { _controller: UserZoneBundle:User:index }
+

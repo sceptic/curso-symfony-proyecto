@@ -15,7 +15,7 @@
         {%for sub in cat.subcategories%}
   			<a href="{{path( 'productos', {'slug':sub.slug})}}" class="list-group-item active">{{sub.name|upper}}</a>
   		{% else %}
-  			<a href="#" class="list-group-item">{{"Catálogo no disponible"|upper}}</a>
+  			<a href="#" class="list-group-item">{{"no-disponible"|trans}}</a>
 		{%endfor%}
 	   </div>
        </div>

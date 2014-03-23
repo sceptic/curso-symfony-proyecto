@@ -1,5 +1,5 @@
 services:
-    # Para probar
+    # Serbicio de prueba
     test_service:
         class: Animales\CatalogoBundle\Util\Test
     # Debug variables

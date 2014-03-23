@@ -28,15 +28,27 @@ admin_check:
     pattern:   /admin_check
 
 
-user_acount:
-    resource: "@UserZoneBundle/Controller/UserController.php"
-    type:     annotation
-    prefix:   /cuenta
+user_cuenta:
+   resource: "@UserZoneBundle/Controller/UserController.php"
+   type:     annotation
+   prefix:   /cuenta
+   defaults: {_locale: es}
+
+user_cuenta_en:
+   resource: "@UserZoneBundle/Controller/UserController.php"
+   type:     annotation
+   prefix:   /acount
+   defaults: {_locale: en}
+
+
 
 admin_settings:
     resource: "@AdminSettingsBundle/Controller/"
     type:     annotation
     prefix:   /admin
+
+
+
 
 
 

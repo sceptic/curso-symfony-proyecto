@@ -51,6 +51,8 @@ class ProductController extends Controller
               $session->set('numProducts', $filNum);
         }
 
+
+        // crear session para filtrado
         $filter = $session->get('filterProduct');
         $numPro = $session->get('numProducts');
         
@@ -79,7 +81,7 @@ class ProductController extends Controller
     /**
      * Creates a new Product entity.
      *
-     * @Route("/", name="product_create")
+     * @Route("/new", name="product_create")
      * @Method("POST")
      * @Template("AnimalesCatalogoBundle:Product:new.html.twig")
      */

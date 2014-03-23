@@ -135,9 +135,9 @@ class SubCategory
      * @param integer $categoryId
      * @return SubCategory
      */
-    public function setCategoryId($categoryId)
+    public function setCategoryId( $categoryId = 1)
     {
-        $this->categoryId = 1;
+        $this->categoryId = $categoryId;
     
         return $this;
     }

@@ -179,7 +179,7 @@ class Images
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    public $path;
+    private $path;
 
     /**
      * Set path

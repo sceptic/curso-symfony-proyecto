@@ -22,6 +22,8 @@ class AppKernel extends Kernel
             new Admin\SettingsBundle\AdminSettingsBundle(),
             new User\ZoneBundle\UserZoneBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+	    new BeSimple\I18nRoutingBundle\BeSimpleI18nRoutingBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

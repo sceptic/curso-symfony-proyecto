@@ -19,7 +19,18 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('subcategory_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td><img  data-src="{{asset('uploads/'~entity.image.path)}}" src="{{asset('uploads/'~entity.image.path)}}" alt="{{entity.image.path}}"></td>
+                <td>
+                
+                {%if entity.image %}
+
+                <img  data-src="{{asset('uploads/'~entity.image.path)}}" src="{{asset('uploads/'~entity.image.path)}}" alt="{{entity.image.path}}">
+
+                {%else%}
+                
+                <p>No-image</p>
+                
+                {% endif%}
+                </td>
                 <td>{{ entity.name }}</td>
                 <td>{{ entity.category.name }}</td>
                 <td>{{ entity.description }}</td>

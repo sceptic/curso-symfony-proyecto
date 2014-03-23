@@ -16,4 +16,7 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# Traduccion parametros URL
+be_simple_i18n_routing: ~
+
 

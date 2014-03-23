@@ -1,9 +1,23 @@
+===========================
+El proyecto tiene 3 partes:
+===========================
+Un Admin, donde se puede crear todo el contenido de la web.
+
+La zona publica donde se muestra un catálogo de producto dividido por categorias y subcategorias
+
+Una zona de usuario donde se puede registrar
+
+
+
+------------------------------------------------------------------------------------------------
+
+
 CATALGO TIENDA ANIMALES
 ========================
 
 IMPORTANTE!
 
-+ Añadir data fixtures aplicación
++ Añadir los data fixtures aplicación
 
 	php app/console doctrine:fixtures:load
 
